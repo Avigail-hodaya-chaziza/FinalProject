@@ -1,0 +1,21 @@
+## עדכון מסד הנתונים לאחר שינוי מודלים (Entity Framework Core)
+
+בכל פעם שמבנה המודלים משתנה (הוספה/שינוי/מחיקה של שדות או מחלקות), יש לבצע את השלבים הבאים:
+
+1. **יצירת מיגרציה חדשה:**  
+   ב־Package Manager Console:
+
+   Add-Migration <MigrationName> -Project Dal -StartupProject Server
+
+   (החליפי `<MigrationName>` בשם שמתאר את השינוי)
+
+2. **עדכון מסד הנתונים:**  
+   ב־Package Manager Console:
+
+   Update-Database -Project Dal -StartupProject Server
+
+   
+> **הערה:**  
+> אין למחוק מיגרציות ישנות – הן שומרות את ההיסטוריה של השינויים במבנה הנתונים.
+
+באמצעות השלבים האלו, מסד הנתונים יתעדכן אוטומטית לפי המודלים החדשים בכל שינוי!
