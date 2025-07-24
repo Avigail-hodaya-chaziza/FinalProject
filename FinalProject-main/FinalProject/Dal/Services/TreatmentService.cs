@@ -77,6 +77,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Dal.Api;
 using Dal.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dal.Services
@@ -98,6 +99,7 @@ namespace Dal.Services
             FullStraightening,
             HeadFrame
         }
+
 
         public void AddTreatmentToDb(Treatment newTreatment)
         {

@@ -1,4 +1,5 @@
 ﻿using Bl;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Server.webApi.DTOs;
 
@@ -16,6 +17,7 @@ namespace Server.webApi.Controllers
         }
 
         [HttpPost("AddTreatment")]
+        [Authorize(Roles = "Admin")]
         public IActionResult AddTreatment([FromBody] TreatmentDTOs dto)
         {
             try
@@ -46,6 +48,8 @@ namespace Server.webApi.Controllers
 
         //לא נראה לי שצריך את הפונקציה הזו
         [HttpPost("AddTreatmentByType")]
+        [Authorize(Roles = "Admin")]
+
         public IActionResult AddTreatmentByType([FromBody] string TreatmentName)
         {
             try
@@ -75,6 +79,8 @@ namespace Server.webApi.Controllers
         //}
 
         [HttpPut("UpdateTreatment/{id}")]
+        [Authorize(Roles = "Admin")]
+
         public IActionResult UpdateTreatment(int id, [FromBody] TreatmentDTOs dto)
         {
             try
@@ -90,6 +96,8 @@ namespace Server.webApi.Controllers
 
 
         [HttpDelete("DeleteTreatment/{id}")]
+        [Authorize(Roles = "Admin")]
+
         public IActionResult DeleteTreatment(int id)
         {
             try

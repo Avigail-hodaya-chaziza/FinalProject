@@ -1,6 +1,27 @@
-﻿namespace Server.webApi.Controllers
+﻿using Dal.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+
+[ApiController]
+[Route("api/[controller]")]
+public class AdminController : ControllerBase
 {
-    public class AdminController
+    private readonly Roles _adminCredentials;
+
+    public AdminController(IOptions<Roles> adminOptions)
     {
+        _adminCredentials = adminOptions.Value;
+    }
+
+    [HttpPost("login")]
+    public IActionResult Login([FromBody] Roles loginData)
+    {
+        if (loginData.Email == _adminCredentials.Email &&
+            loginData.Id == _adminCredentials.Id)
+        {
+            return Ok(new { role = "Admin", name = loginData.FullName });
+        }
+
+        return Unauthorized("אימייל או מזהה שגויים");
     }
 }

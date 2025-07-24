@@ -4,6 +4,7 @@ using Bl;
 using Dal.Models;
 using Dal.Services;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors(options =>
@@ -34,6 +35,8 @@ builder.Services.AddScoped<AppointmentService>();
 builder.Services.AddScoped<TreatmentService>();
 builder.Services.AddScoped<BlockedSlotService>();
 
+builder.Services.Configure<Roles>(
+    builder.Configuration.GetSection("AdminCredentials"));
 
 // רישום HttpClient (אם צריך)
 builder.Services.AddHttpClient();

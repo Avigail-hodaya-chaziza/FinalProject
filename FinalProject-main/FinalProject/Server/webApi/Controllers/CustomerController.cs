@@ -1,5 +1,6 @@
 ﻿using Bl;
 using Dal.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Server.webApi.DTOs;
 
@@ -36,6 +37,8 @@ namespace Server.webApi.Controllers
         }
 
         [HttpGet("GetAllCustomers")]
+        [Authorize(Roles = "Admin")]
+
         public ActionResult<List<CustomerDto>> GetAllCustomers()
         {
             try
@@ -72,6 +75,8 @@ namespace Server.webApi.Controllers
         }
 
         [HttpPut("contact/{customerId}")]
+        [Authorize(Roles = "Admin")]
+
         public IActionResult ContactCustomer([FromBody] int customerId)
         {
             try
@@ -133,17 +138,6 @@ namespace Server.webApi.Controllers
             }
         }
 
-        [HttpGet("admin-only")]
-        public IActionResult GetAdminData()
-        {
-            var userRole = User.Claims.FirstOrDefault(c => c.Type == "role")?.Value;
-
-            if (userRole != "admin")
-            {
-                return Forbid(); // או Unauthorized()
-            }
-
-            return Ok("רק מנהל רואה את זה");
-        }
+       
     }
 }
