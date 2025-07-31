@@ -17,7 +17,7 @@ namespace Server.webApi.Controllers
         }
 
         [HttpPost("AddTreatment")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public IActionResult AddTreatment([FromBody] TreatmentDTOs dto)
         {
             try
@@ -36,7 +36,7 @@ namespace Server.webApi.Controllers
         {
             try
             {
-                var treatments = _treatmentBl.GetAllCustomers();
+                var treatments = _treatmentBl.GetAllTreatments();
                 return Ok(treatments); // מחזיר 200 OK עם רשימת טיפולים.
             }
             catch (Exception ex)

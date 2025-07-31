@@ -15,6 +15,16 @@ namespace Dal.Models
         public string Password { get; set; } = string.Empty;
 
         public UserRole Role { get; set; } = UserRole.User;
+        public Roles() { }
+        public Roles(int id, string fullName, string email, string password, UserRole role)
+        {
+            Id = id;
+            FullName = fullName;
+            Email = email;
+            Password = password;
+            Role = role;
+        }
+    
     }
 }
 

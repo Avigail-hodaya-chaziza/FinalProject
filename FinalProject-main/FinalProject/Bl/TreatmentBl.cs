@@ -32,7 +32,7 @@ public class TreatmentBl
         _treatmentDal.AddTreatmentToDb(newTreatment);
     }
 
-    public List<Treatment> GetAllCustomers()
+    public List<Treatment> GetAllTreatments()
     {
         return _treatmentDal.GetAllTreatments();
     }

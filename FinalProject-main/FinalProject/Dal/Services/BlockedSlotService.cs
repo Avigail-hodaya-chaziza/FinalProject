@@ -71,6 +71,7 @@ namespace Dal.Services
         public void AddBlockedSlot(BlockedSlot slot)
         {
             _dbContext.BlockedSlots.Add(slot);
+            _dbContext.SaveChanges();
         }
 
         public void SaveChanges()

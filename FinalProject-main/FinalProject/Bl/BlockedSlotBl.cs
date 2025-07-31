@@ -190,7 +190,7 @@ namespace Bl
             _blockedSlotService.SaveChanges();
             return _blockedSlotService.GetAllBlockedDates();
         }
-        public async Task AddBlockedDate(DateOnly date, string holidayName)
+        public async Task AddBlockedDate(DateOnly date, string holidayName, string? countryCode = null)
         {
             if (_blockedSlotService.IsDateBlocked(date))
             {
@@ -202,10 +202,12 @@ namespace Bl
                 Date = date,
                 HolidayName = holidayName,
                 Year = date.Year,
-                IsHoliday = true
+                IsHoliday = true,
+                CountryCode = countryCode ?? "IL"  // ברירת מחדל אם לא התקבל ערך
             });
             _blockedSlotService.SaveChanges();
         }
+
         public bool IsDateAvailable(DateOnly date)
         {
             return !_blockedSlotService.IsDateBlocked(date);

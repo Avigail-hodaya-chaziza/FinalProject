@@ -43,7 +43,9 @@ namespace Server.webApi.Controllers
 
             try
             {
-                await _blockedSlotBl.AddBlockedDate(dto.Date, dto.HolidayName);
+                Console.WriteLine($"CountryCode received: {dto.CountryCode ?? "NULL"}");
+
+                await _blockedSlotBl.AddBlockedDate(dto.Date, dto.HolidayName,dto.CountryCode);
                 return Ok("Blocked date added successfully.");
             }
             catch (Exception ex)

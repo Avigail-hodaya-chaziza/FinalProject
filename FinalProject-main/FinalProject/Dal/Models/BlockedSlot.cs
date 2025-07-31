@@ -11,7 +11,7 @@ public partial class BlockedSlot
 
     public string HolidayName { get; set; } = null!;
 
-    public string CountryCode { get; set; } = null!;
+    public string CountryCode { get; set; } 
 
     public int Year { get; set; }
 

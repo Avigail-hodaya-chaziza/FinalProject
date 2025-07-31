@@ -20,11 +20,13 @@ namespace Server.webApi.Controllers
         {
             try
             {
+                Console.WriteLine("קיבלנו לקוח:");
+
                 // הערך של isContacted יהיה תמיד true כשלא מצוין אחרת (אתה יכול לשנות את זה לפי הצורך)
                 bool isContacted = false;  // ניתן לשנות פה אם יש לך לוגיקה אחרת לקביעת הערך
 
                 // קריאה לפונקציה ב-BL
-                _customerBl.AddCustomer(customerDto.CustomerId, customerDto.FirstName,
+                _customerBl.AddCustomer(customerDto.Id, customerDto.FirstName,
                     customerDto.LastName, customerDto.PhoneNumber, customerDto.Email, isContacted);
 
                 return Ok("Customer added successfully.");
@@ -32,13 +34,12 @@ namespace Server.webApi.Controllers
             catch (ArgumentException ex)
             {
                 // אם יש בעיה בנתונים, מחזירים הודעת שגיאה
-                return BadRequest(ex.Message);
+                Console.WriteLine("שגיאה בשרת: " + ex.Message);
+                return StatusCode(500, new { error = "שגיאה בשרת", details = ex.Message });
             }
         }
-
-        [HttpGet("GetAllCustomers")]
         [Authorize(Roles = "Admin")]
-
+        [HttpGet("GetAllCustomers")]
         public ActionResult<List<CustomerDto>> GetAllCustomers()
         {
             try
@@ -60,7 +61,7 @@ namespace Server.webApi.Controllers
 
             try
             {
-                _customerBl.UpdateCustomer(customerDto.CustomerId, customerDto.FirstName,
+                _customerBl.UpdateCustomer(customerDto.Id, customerDto.FirstName,
                     customerDto.LastName, customerDto.PhoneNumber, customerDto.Email);
                 return Ok("Customer updated successfully.");
             }
@@ -74,15 +75,15 @@ namespace Server.webApi.Controllers
             }
         }
 
-        [HttpPut("contact/{customerId}")]
+        [HttpPut("contact/{id}")]
         [Authorize(Roles = "Admin")]
 
-        public IActionResult ContactCustomer([FromBody] int customerId)
+        public IActionResult ContactCustomer([FromBody] int id)
         {
             try
             {
-                _customerBl.ContactCustomer(customerId);
-                return Ok($"Customer with ID {customerId} has been contacted.");
+                _customerBl.ContactCustomer(id);
+                return Ok($"Customer with ID {id} has been contacted.");
             }
             catch (ArgumentException ex)
             {
@@ -99,6 +100,7 @@ namespace Server.webApi.Controllers
         {
             try
             {
+
                 var customers = _customerBl.GetUncontactedCustomers();
                 return Ok(customers); // מחזיר 200 OK עם רשימת לקוחות
             }
@@ -109,17 +111,17 @@ namespace Server.webApi.Controllers
         }
 
         [HttpGet("FindByIdAndemail")]
-        public IActionResult FindByIdAndemail(int customerId, string email)
+        public IActionResult FindByIdAndemail(int id, string email)
         {
             try
             {
-                var customer = _customerBl.FindByIdAndEmail(customerId, email);
+                var customer = _customerBl.FindByIdAndEmail(id, email);
 
                 // אם לא מצא לפי ת"ז ואימייל – נבדוק אם קיים לפחות לפי ת"ז
                 if (customer == null)
                 {
-                    bool exists = _customerBl.ExistsById(customerId);
-                    Console.WriteLine($"customerId: {customerId}, email: {email}, exists: {exists}");
+                    bool exists = _customerBl.ExistsById(id);
+                    Console.WriteLine($"customerId: {id}, email: {email}, exists: {exists}");
 
                     if (exists)
                     {

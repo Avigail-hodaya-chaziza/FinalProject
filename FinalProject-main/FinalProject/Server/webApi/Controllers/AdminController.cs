@@ -16,6 +16,7 @@ public class AdminController : ControllerBase
     [HttpPost("login")]
     public IActionResult Login([FromBody] Roles loginData)
     {
+        Console.WriteLine("Received login for: " + loginData.Email);
         if (loginData.Email == _adminCredentials.Email &&
             loginData.Id == _adminCredentials.Id)
         {
@@ -24,4 +25,5 @@ public class AdminController : ControllerBase
 
         return Unauthorized("אימייל או מזהה שגויים");
     }
+
 }
