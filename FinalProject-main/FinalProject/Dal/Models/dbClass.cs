@@ -108,7 +108,7 @@ namespace Dal.Models;
 
 public partial class dbClass : DbContext
 {
-    // אין צורך ב-ctor ללא פרמטרים כאשר עובדים עם DI
+
     public dbClass(DbContextOptions<dbClass> options)
         : base(options)
     {
@@ -118,64 +118,9 @@ public partial class dbClass : DbContext
     public virtual DbSet<BlockedSlot> BlockedSlots { get; set; }
     public virtual DbSet<Customer> Customers { get; set; }
     public virtual DbSet<Treatment> Treatments { get; set; }
+    public virtual DbSet<Review> Reviews { get; set; }
 
-    // אין צורך ב-OnConfiguring כאשר משתמשים ב-DI, אלא אם רוצים לאפשר הרצה גם מחוץ ל-DI
-    // אם משאירים, יש לבדוק אם כבר הוגדרו אפשרויות
-    // מומלץ למחוק לגמרי:
-    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    // {
-    //     if (!optionsBuilder.IsConfigured)
-    //     {
-    //         optionsBuilder.UseSqlServer("your-connection-string");
-    //     }
-    // }
-    //public void SeedData()
-    //{
-    //    using (var context = new YourDbContext())
-    //    {
-    //        // בדוק אם יש לקוחות קיימים
-    //        if (!context.Customers.Any())
-    //        {
-    //            // הוסף לקוחות חדשים
-    //            context.Customers.AddRange(new List<Customer>
-    //        {
-    //            new Customer { FirstName = "John", LastName = "Doe", PhoneNumber = "1234567890", Email = "john.doe@example.com", IsContacted = false },
-    //            new Customer { FirstName = "Jane", LastName = "Smith", PhoneNumber = "0987654321", Email = "jane.smith@example.com", IsContacted = true }
-    //        });
-    //        }
-
-    //        // בדוק אם יש טיפולים קיימים
-    //        if (!context.Treatments.Any())
-    //        {
-    //            // הוסף טיפולים חדשים
-    //            context.Treatments.AddRange(new List<Treatment>
-    //        {
-    //            new Treatment { TreatmentName = "Massage", Duration = 60, Price = 100 },
-    //            new Treatment { TreatmentName = "Facial", Duration = 45, Price = 80 }
-    //        });
-    //        }
-
-    //        // בדוק אם יש פגישות קיימות
-    //        if (!context.Appointments.Any())
-    //        {
-    //            // הוסף פגישות חדשות
-    //            context.Appointments.AddRange(new List<Appointment>
-    //        {
-    //            new Appointment { CustomerId = 1, TreatmentId = 1, ScheduledTime = DateOnly.FromDateTime(DateTime.Now.AddDays(1)), Status = "Scheduled" },
-    //            new Appointment { CustomerId = 2, TreatmentId = 2, ScheduledTime = DateOnly.FromDateTime(DateTime.Now.AddDays(2)), Status = "Scheduled" }
-    //        });
-    //        }
-
-    //        // שמור את השינויים במסד הנתונים
-    //        context.SaveChanges();
-    //    }
-    //}
-
-
-
-
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+   protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<BlockedSlot>()
             .Property(b => b.Date)

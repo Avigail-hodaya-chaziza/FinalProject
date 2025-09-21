@@ -58,7 +58,7 @@ namespace Dal.Services
                 .ToList();
         }
 
-        public List<Appointment> GetAppointmentsByCustomerId(int customerId)
+        public List<Appointment> GetAppointmentsByCustomerId(string customerId)
         {
             return _dbContext.Appointments
                 .Where(a => a.CustomerId == customerId)

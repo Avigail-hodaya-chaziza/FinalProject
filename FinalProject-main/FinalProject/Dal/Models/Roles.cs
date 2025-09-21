@@ -9,14 +9,14 @@ namespace Dal.Models
     public class Roles
 
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string FullName { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
 
         public UserRole Role { get; set; } = UserRole.User;
         public Roles() { }
-        public Roles(int id, string fullName, string email, string password, UserRole role)
+        public Roles(string id, string fullName, string email, string password, UserRole role)
         {
             Id = id;
             FullName = fullName;

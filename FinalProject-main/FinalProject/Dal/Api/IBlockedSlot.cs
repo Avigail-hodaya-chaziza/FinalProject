@@ -13,6 +13,8 @@ namespace Dal.Api
         //bool Availabledates(DateOnly date);
         bool IsDateBlocked(DateOnly date);
         void AddBlockedSlot(BlockedSlot slot);
+        void RemoveBlockedSlot(BlockedSlot slot);
+        void ClearAllBlockedSlots();
         void SaveChanges();
         //bool Exists(DateOnly date);
         List<DateOnly> GetAllBlockedDates();

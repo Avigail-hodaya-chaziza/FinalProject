@@ -5,7 +5,7 @@ namespace Dal.Models;
 
 public partial class Customer
 {
-    public int CustomerId { get; set; }
+    public string CustomerId { get; set; }
 
     public string FirstName { get; set; } = null!;
 
@@ -20,7 +20,7 @@ public partial class Customer
     public virtual ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
     public Customer()
     { }
-    public Customer(int customerId, string firstName, string lastName, string phoneNumber, string email, bool isContacted)
+    public Customer(string customerId, string firstName, string lastName, string phoneNumber, string email, bool isContacted)
     {
         CustomerId = customerId;
         FirstName = firstName;

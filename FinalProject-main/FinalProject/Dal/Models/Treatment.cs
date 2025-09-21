@@ -8,6 +8,7 @@ public partial class Treatment
     public int TreatmentId { get; set; }
 
     public string TreatmentName { get; set; } = null!;
+    public string Description { get; set; }
 
     public int TimeOfCare { get; set; }
 
@@ -16,9 +17,10 @@ public partial class Treatment
     public virtual ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
     public Treatment()
     { }
-    public Treatment(int treatmentId, string treatmentName, int timeOfCare, decimal minPrice, ICollection<Appointment> appointments)
+    public Treatment(int treatmentId, string description, string treatmentName, int timeOfCare, decimal minPrice, ICollection<Appointment> appointments)
     {
         TreatmentId = treatmentId;
+        Description = description;
         TreatmentName = treatmentName;
         TimeOfCare = timeOfCare;
         MinPrice = minPrice;

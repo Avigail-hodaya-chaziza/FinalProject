@@ -5,7 +5,8 @@ namespace Server.webApi.DTOs
     public class TreatmentDTOs
     {
         public string? TreatmentName { get; set; }
-        
+        public string Description { get; set; }
+
         public int? TimeOfCare { get; set; }
        
         public decimal? MinPrice { get; set; }

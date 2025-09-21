@@ -19,18 +19,18 @@ namespace Dal.Api
         //// פונקציה שמראה את כל הלקוחות שקבעו תור ועדיין לא יצרו איתם קשר טלפוני
         //List<Customer> GetCustomer(int CustomerId);
          List<Customer> GetAllCustomers();
-        void UpdateCustomer(int customerId, string firstName,
+        void UpdateCustomer(string customerId, string firstName,
             string lastName, string phoneNumber, string email);
 
-        void ContactCustomer(int customerId);
+        void ContactCustomer(string customerId);
 
         List<Customer> GetUncontactedCustomers();
 
-         Customer? GetCustomerById(int customerId);
+         Customer? GetCustomerById(string customerId);
 
          void AddCustomer(Customer customer);
-        bool ExistsById(int customerId);
-        Customer FindByIdAndEmail(int customerId, string email);
+        bool ExistsById(string customerId);
+        Customer FindByIdAndEmail(string customerId, string email);
 
     }
 

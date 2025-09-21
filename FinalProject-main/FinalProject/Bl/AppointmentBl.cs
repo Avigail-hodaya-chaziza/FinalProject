@@ -21,7 +21,7 @@ namespace Bl
             _blockedSlotService = blockedSlotService;
         }
 
-        public bool AddAppointment(int customerId, DateOnly date, int treatment)
+        public bool AddAppointment(string customerId, DateOnly date, int treatment)
         {
             var existingCustomer = _customerService.GetCustomerById(customerId);
             if (existingCustomer == null)
@@ -73,6 +73,27 @@ namespace Bl
             };
 
             _appointmentService.AddAppointment(appointment);
+            
+            // חסימת התאריך אוטומטית
+            try
+            {
+                var blockedSlot = new BlockedSlot
+                {
+                    Date = date,
+                    HolidayName = "תאריך תפוס - תור קבוע",
+                    Year = date.Year,
+                    IsHoliday = false,
+                    CountryCode = "IL"
+                };
+                _blockedSlotService.AddBlockedSlot(blockedSlot);
+                Log.Information($"Date {date} automatically blocked after appointment booking.");
+            }
+            catch (Exception ex)
+            {
+                Log.Warning($"Failed to block date {date}: {ex.Message}");
+                // לא נכשיל את התור אם החסימה נכשלה
+            }
+            
             Log.Information($"Appointment scheduled for {date}.");
             return true;
         }
@@ -121,7 +142,7 @@ namespace Bl
             return true;
         }
 
-        public bool UpdateAppointment(int customerId, DateOnly date, int treatment)
+        public bool UpdateAppointment(string customerId, DateOnly date, int treatment)
         {
             var appt = _appointmentService.GetAppointmentByDate(date);
             if (appt == null)
@@ -164,7 +185,7 @@ namespace Bl
             return true;
         }
 
-        public List<Appointment> GetAppointmentsByCustomerId(int customerId)
+        public List<Appointment> GetAppointmentsByCustomerId(string customerId)
         {
             return _appointmentService.GetAppointmentsByCustomerId(customerId);
         }

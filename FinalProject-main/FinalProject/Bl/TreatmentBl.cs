@@ -10,7 +10,7 @@ public class TreatmentBl
         _treatmentDal = treatmentDal;
     }
 
-    public void AddTreatment(string? treatmentName, int? timeOfCare, decimal? minPrice)
+    public void AddTreatment(string? treatmentName, string? description, int? timeOfCare, decimal? minPrice)
     {
         if (string.IsNullOrWhiteSpace(treatmentName))
             throw new ArgumentException("Name cannot be null or empty");
@@ -22,9 +22,13 @@ public class TreatmentBl
             throw new ArgumentException("Price must be greater than zero");
         if (treatmentName == null || minPrice == null || timeOfCare == null)
             throw new ArgumentException(" Name or Price or duration cannot be null");
+            
+        Console.WriteLine($"Creating treatment with Hebrew text: {treatmentName}, {description}");
+        
         Treatment newTreatment = new Treatment
         {
             TreatmentName = treatmentName,
+            Description = description ?? "",
             TimeOfCare = (int)timeOfCare,
             MinPrice = (decimal)minPrice
         };
@@ -41,17 +45,12 @@ public class TreatmentBl
     {
         var (minPrice, timeOfCare) = _treatmentDal.GetTreatmentDetails(treatmentType);
 
-        AddTreatment(treatmentName, timeOfCare, minPrice);
+        AddTreatment(treatmentName, "", timeOfCare, minPrice);
     }
 
-    //public void UpdateTreatment(int treatmentId, string? treatmentName, int? timeOfCare, decimal? minPrice)
-    //{
-    //    _treatmentDal.UpdateTreatment(treatmentId, treatmentName, timeOfCare, minPrice); // מעביר ל-DAL
-    //}
-
-    public void UpdateTreatment(int treatmentId, string? treatmentName, int? timeOfCare, decimal? minPrice)
+    public void UpdateTreatment(int treatmentId,string description, string? treatmentName, int? timeOfCare, decimal? minPrice)
     {
-        _treatmentDal.UpdateTreatment(treatmentId, treatmentName, timeOfCare, minPrice);
+        _treatmentDal.UpdateTreatment(treatmentId, description, treatmentName, timeOfCare, minPrice);
     }
 
     public void DeleteTreatment(int treatmentId)

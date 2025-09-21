@@ -72,13 +72,8 @@
 
 
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Dal.Api;
 using Dal.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.EntityFrameworkCore;
 
 namespace Dal.Services
 {
@@ -103,6 +98,9 @@ namespace Dal.Services
 
         public void AddTreatmentToDb(Treatment newTreatment)
         {
+            if (string.IsNullOrEmpty(newTreatment.Description))
+                newTreatment.Description = "";
+
             _context.Treatments.Add(newTreatment);
             _context.SaveChanges();
         }
@@ -163,7 +161,7 @@ namespace Dal.Services
         //}
 
 
-        public void UpdateTreatment(int treatmentId, string? treatmentName, int? timeOfCare, decimal? minPrice)
+        public void UpdateTreatment(int treatmentId, string description, string? treatmentName, int? timeOfCare, decimal? minPrice)
         {
             var treatment = _context.Treatments.FirstOrDefault(t => t.TreatmentId == treatmentId);
             if (treatment == null)
@@ -177,7 +175,10 @@ namespace Dal.Services
 
             if (minPrice.HasValue)
                 treatment.MinPrice = minPrice.Value;
-
+            if (description != null)
+                treatment.Description = description;
+            else if (string.IsNullOrEmpty(treatment.Description))
+                treatment.Description = "";
             _context.SaveChanges();
         }
 

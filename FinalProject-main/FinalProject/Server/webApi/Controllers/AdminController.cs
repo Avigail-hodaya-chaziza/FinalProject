@@ -16,13 +16,35 @@ public class AdminController : ControllerBase
     [HttpPost("login")]
     public IActionResult Login([FromBody] Roles loginData)
     {
-        Console.WriteLine("Received login for: " + loginData.Email);
-        if (loginData.Email == _adminCredentials.Email &&
-            loginData.Id == _adminCredentials.Id)
+        Console.WriteLine($"=== ADMIN LOGIN DEBUG ===");
+        Console.WriteLine($"Received: Email={loginData?.Email}, ID={loginData?.Id}, Password={loginData?.Password}");
+        Console.WriteLine($"Expected: Email={_adminCredentials?.Email}, ID={_adminCredentials?.Id}, Password={_adminCredentials?.Password}");
+        
+        if (loginData == null)
         {
-            return Ok(new { role = "Admin", name = loginData.FullName });
+            Console.WriteLine("ERROR: loginData is null");
+            return BadRequest("No data received");
+        }
+        
+        bool emailMatch = loginData.Email == _adminCredentials.Email;
+        bool idMatch = loginData.Id == _adminCredentials.Id;
+        bool passwordMatch = loginData.Password == _adminCredentials.Password;
+        
+        Console.WriteLine($"Email match: {emailMatch}");
+        Console.WriteLine($"ID match: {idMatch}");
+        Console.WriteLine($"Password match: {passwordMatch}");
+        
+        if (emailMatch && idMatch && passwordMatch)
+        {
+            Console.WriteLine("Admin login successful!");
+            return Ok(new { 
+                role = "Admin",
+                name = _adminCredentials.FullName,
+                fullName = _adminCredentials.FullName
+            });
         }
 
+        Console.WriteLine("Admin login failed - credentials don't match");
         return Unauthorized("אימייל או מזהה שגויים");
     }
 

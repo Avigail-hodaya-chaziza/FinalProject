@@ -14,7 +14,7 @@ namespace Dal.Api
         //void UpdateAppointement(Customer customer, DateOnly date, Treatment treatment);
         ////function to delete all appointments before the current year
         //void DeleteAppointmentsBeforeCurrentYear();
-        //Customer? GetCustomerById(int customerId);
+        //Customer? GetCustomerById(string customerId);
         //void AddCustomer(Customer customer);
         bool IsDateTaken(DateOnly date);
         //List<DateOnly> GetBlockedDates();
@@ -24,7 +24,7 @@ namespace Dal.Api
         void DeleteAppointment(Appointment appointment);
         void DeleteAppointments(List<Appointment> appointments);
         List<Appointment> GetAppointmentsBeforeYear(int year);
-        public List<Appointment> GetAppointmentsByCustomerId(int customerId);
+        public List<Appointment> GetAppointmentsByCustomerId(string customerId);
         public List<Appointment> GetAppointmentsInRange(DateOnly startDate, DateOnly endDate);
         public List<Appointment> GetUpcomingAppointments();
 

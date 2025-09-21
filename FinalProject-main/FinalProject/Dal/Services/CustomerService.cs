@@ -26,7 +26,7 @@ public class CustomerService : ICustomer
         return customers;
     }
 
-    public Customer? GetCustomerById(int customerId)
+    public Customer? GetCustomerById(string customerId)
     {
         return _dbContext.Customers.FirstOrDefault(c => c.CustomerId == customerId);
     }
@@ -38,7 +38,7 @@ public class CustomerService : ICustomer
     }
 
 
-    public void UpdateCustomer(int customerId, string firstName, string lastName, string phoneNumber, string email)
+    public void UpdateCustomer(string customerId, string firstName, string lastName, string phoneNumber, string email)
     {
         var customer = _dbContext.Customers.FirstOrDefault(c => c.CustomerId == customerId);
         if (customer == null)
@@ -52,7 +52,7 @@ public class CustomerService : ICustomer
         _dbContext.SaveChanges();
     }
 
-    public void ContactCustomer(int customerId)
+    public void ContactCustomer(string customerId)
     {
         var customer = _dbContext.Customers.FirstOrDefault(c => c.CustomerId == customerId);
         if (customer == null)
@@ -68,12 +68,12 @@ public class CustomerService : ICustomer
         return customer;
     }
 
-    public Customer FindByIdAndEmail(int customerId, string email)
+    public Customer FindByIdAndEmail(string customerId, string email)
     {
         return _dbContext.Customers.FirstOrDefault(c => c.CustomerId == customerId && c.Email == email);
     }
 
-    public bool ExistsById(int customerId)
+    public bool ExistsById(string customerId)
     {
         return _dbContext.Customers.Any(c => c.CustomerId == customerId);
     }

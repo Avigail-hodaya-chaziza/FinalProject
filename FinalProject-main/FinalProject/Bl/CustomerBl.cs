@@ -20,7 +20,7 @@ namespace Bl
             return _customerDal.GetAllCustomers();
         }
 
-        public void AddCustomer(int customerId, string firstName, string lastName, string phoneNumber, string email, bool isContacted)
+        public void AddCustomer(string customerId, string firstName, string lastName, string phoneNumber, string email, bool isContacted)
         {
             // בדיקות תקינות
             if (string.IsNullOrWhiteSpace(firstName))
@@ -41,13 +41,13 @@ namespace Bl
             _customerDal.AddCustomer(newCustomer);
         }
 
-        public void UpdateCustomer(int customerId, string firstName, string lastName, string phoneNumber, string email)
+        public void UpdateCustomer(string customerId, string firstName, string lastName, string phoneNumber, string email)
         {
             _customerDal.UpdateCustomer(customerId, firstName, lastName, phoneNumber, email);
             Console.WriteLine($"Customer {firstName} {lastName} has been updated.");
         }
 
-        public void ContactCustomer(int customerId)
+        public void ContactCustomer(string customerId)
         {
             _customerDal.ContactCustomer(customerId);
             Console.WriteLine($"Customer with ID {customerId} has been contacted.");
@@ -63,12 +63,12 @@ namespace Bl
             return customers;
         }
 
-        public Customer FindByIdAndEmail(int customerId, string email)
+        public Customer FindByIdAndEmail(string customerId, string email)
         {
             return _customerDal.FindByIdAndEmail(customerId, email);
         }
 
-        public bool ExistsById(int customerId)
+        public bool ExistsById(string customerId)
         {
             return _customerDal.ExistsById(customerId);
         }

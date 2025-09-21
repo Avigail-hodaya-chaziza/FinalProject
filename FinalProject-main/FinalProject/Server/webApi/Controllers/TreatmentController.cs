@@ -22,11 +22,13 @@ namespace Server.webApi.Controllers
         {
             try
             {
-                _treatmentBl.AddTreatment(dto.TreatmentName, dto.TimeOfCare, dto.MinPrice);
+                Console.WriteLine($"Adding treatment: {dto.TreatmentName}, Description: {dto.Description}");
+                _treatmentBl.AddTreatment(dto.TreatmentName, dto.Description, dto.TimeOfCare, dto.MinPrice);
                 return Ok("Treatment added successfully.");
             }
             catch (ArgumentException ex)
             {
+                Console.WriteLine($"Error adding treatment: {ex.Message}");
                 return BadRequest(ex.Message);
             }
         }
@@ -46,7 +48,6 @@ namespace Server.webApi.Controllers
         }
 
 
-        //לא נראה לי שצריך את הפונקציה הזו
         [HttpPost("AddTreatmentByType")]
         [Authorize(Roles = "Admin")]
 
@@ -85,7 +86,7 @@ namespace Server.webApi.Controllers
         {
             try
             {
-                _treatmentBl.UpdateTreatment(id, dto.TreatmentName, dto.TimeOfCare, dto.MinPrice);
+                _treatmentBl.UpdateTreatment(id, dto.Description, dto.TreatmentName, dto.TimeOfCare, dto.MinPrice);
                 return Ok("Treatment updated successfully.");
             }
             catch (ArgumentException ex)

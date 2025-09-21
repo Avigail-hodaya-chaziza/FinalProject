@@ -11,11 +11,13 @@ namespace Server.webApi.Controllers
     public class AppointmentController : ControllerBase
     {
         private readonly AppointmentBl _appointmentBl;
+        private readonly BlockedSlotBl _blockedSlotBl;
         private readonly ILogger<AppointmentController> _logger;
 
-        public AppointmentController(AppointmentBl appointmentBl, ILogger<AppointmentController> logger)
+        public AppointmentController(AppointmentBl appointmentBl, BlockedSlotBl blockedSlotBl, ILogger<AppointmentController> logger)
         {
             _appointmentBl = appointmentBl;
+            _blockedSlotBl = blockedSlotBl;
             _logger = logger;
         }
 
@@ -39,6 +41,8 @@ namespace Server.webApi.Controllers
                 {
                     return BadRequest("לא ניתן להוסיף את התור. ייתכן שהתאריך תפוס, חסום, או לא תקין.");
                 }
+
+
 
                 return Ok("Appointment added successfully.");
             }
@@ -97,7 +101,7 @@ namespace Server.webApi.Controllers
         }
 
         [HttpGet("GetAppointmentsByCustomerId/{customerId}")]
-        public ActionResult<List<Appointment>> GetAppointmentsByCustomerId([FromBody] int customerId)
+        public ActionResult<List<Appointment>> GetAppointmentsByCustomerId([FromBody] string customerId)
         {
             var appointments = _appointmentBl.GetAppointmentsByCustomerId(customerId);
             return Ok(appointments);

@@ -11,7 +11,7 @@ public partial class BlockedSlot
 
     public string HolidayName { get; set; } = null!;
 
-    public string CountryCode { get; set; } 
+    public string CountryCode { get; set; } = "IL"; 
 
     public int Year { get; set; }
 
@@ -23,6 +23,7 @@ public partial class BlockedSlot
         HolidayName = holidayName;
         Year = year;
         IsHoliday = true;
+        CountryCode = "IL";
     }
 
 }
