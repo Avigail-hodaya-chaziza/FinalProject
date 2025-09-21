@@ -1,0 +1,118 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  /* אין צורך להגדיר כאן רקע, הוא יגיע מה-body של הפרויקט כולו */
+  /* background-image: url('./image_4d7cfd.jpg'); */
+  /* background-size: cover; */
+  /* background-position: center; */
+  /* background-attachment: fixed; */
+  /* background-color: transparent; /* ודא שהוא שקוף כדי לא לחסום את רקע הבאדי */
+
+  font-family: 'Rubik', sans-serif; /* וודא שפונט Rubik מיובא לפרויקט שלך */
+  direction: rtl; /* יישור כולל מימין לשמאל */
+  padding: 20px; /* ריווח כללי מהקצוות */
+}
+
+.login-box {
+  background-color: rgba(255, 255, 255, 0.85); /* רקע לבן עם שקיפות כדי שהרקע הכללי יציץ */
+  padding: 40px;
+  border-radius: 15px; /* פינות מעוגלות יותר */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); /* צל עמוק יותר אך עדין */
+  width: 100%;
+  max-width: 450px; /* הגדלת רוחב מקסימלי */
+  text-align: center;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* אנימציה עדינה בכניסה */
+}
+
+.login-box:hover {
+    transform: translateY(-5px); /* אפקט קטן בריחוף */
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2); /* צל מעט יותר בולט בריחוף */
+}
+
+.login-title {
+  font-size: 2.5rem; /* גודל כותרת גדול יותר */
+  font-weight: 700; /* עובי פונט מודגש */
+  color: #880e4f; /* צבע כהה ויוקרתי */
+  margin-bottom: 10px;
+}
+
+.login-subtitle {
+    font-size: 1.1rem;
+    color: #4a4a4a;
+    margin-bottom: 30px;
+}
+
+.input-group {
+  text-align: right;
+  margin-bottom: 25px; /* ריווח גדול יותר בין שדות */
+}
+
+.input-group label {
+  display: block;
+  font-size: 1rem;
+  color: #333; /* צבע כהה יותר ללייבל */
+  margin-bottom: 10px; /* ריווח מלייבל לשדה */
+  font-weight: 500; /* עובי פונט קצת יותר מודגש */
+}
+
+.login-input {
+  width: 100%;
+  padding: 15px 20px; /* הגדלת ריווח פנימי */
+  border: 1px solid #e0e0e0; /* גבול עדין יותר */
+  border-radius: 10px; /* פינות מעוגלות יותר לאינפוט */
+  font-size: 1.1rem; /* גודל פונט גדול יותר באינפוט */
+  box-sizing: border-box;
+  background-color: #fafafa; /* רקע בהיר לאינפוט */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-input::placeholder {
+    color: #b0b0b0; /* צבע פלייסהולדר עדין */
+}
+
+.login-input:focus {
+  outline: none;
+  border-color: #800020; /* צבע הדגשה של ורוד יין */
+  box-shadow: 0 0 0 4px rgba(128, 0, 32, 0.2); /* צל עדין בפוקוס */
+  background-color: white;
+}
+
+.login-button {
+  width: 100%;
+  padding: 15px 20px;
+  background-color: #800020; /* צבע כפתור ורוד יין */
+  color: white;
+  border: none;
+  border-radius: 10px; /* פינות מעוגלות לכפתור */
+  font-size: 1.2rem; /* גודל פונט גדול יותר בכפתור */
+  font-weight: 600; /* עובי פונט מודגש יותר */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-top: 20px;
+}
+
+.login-button:hover {
+  background-color: #600018; /* צבע כהה יותר לורוד יין בריחוף */
+  transform: translateY(-2px); /* אפקט הרמה קטן בריחוף */
+}
+
+.login-button:active {
+  transform: translateY(0); /* אפקט לחיצה */
+}
+
+/* התאמה למסכים קטנים */
+@media (max-width: 600px) {
+  .login-box {
+    padding: 30px 20px;
+    margin: 15px;
+  }
+  .login-title {
+    font-size: 2rem;
+  }
+  .login-input, .login-button {
+    padding: 12px 15px;
+    font-size: 1rem;
+  }
+}

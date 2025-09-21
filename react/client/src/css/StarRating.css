@@ -1,0 +1,63 @@
+.rating-container {
+  background-color: #ffffff; /* רקע לבן */
+  color: #333; /* טקסט כהה */
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  margin: 2rem auto;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+h2 {
+  margin-bottom: 1.5rem;
+}
+
+.stars {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.stars button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.star {
+  font-size: 2.5rem;
+  color: #ccc; /* כוכב לא נבחר - אפור בהיר */
+  transition: color 0.2s;
+}
+
+.on .star {
+  color: #ffc107; /* כוכב נבחר - צהוב/זהב */
+}
+
+textarea {
+  width: 90%;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  resize: vertical;
+  min-height: 100px;
+  margin-bottom: 1rem;
+}
+
+.submit-button {
+  background-color: #4CAF50; /* ירוק */
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+  background-color: #45a049;
+}

@@ -1,0 +1,173 @@
+/* מיכל הלוח שנה */
+.calendar-container {
+  max-width: 900px;
+  margin: 40px auto;
+  background: transparent;   /* שקוף */
+  padding: 0;
+  text-align: center;
+}
+
+/* כותרת */
+.calendar-title {
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+  color: #fff;  /* שיהיה קריא על רקע כהה */
+  text-shadow: 0px 2px 5px rgba(0,0,0,0.4);
+}
+
+/* לוח שנה */
+.react-datepicker {
+  background: transparent !important; /* שקוף */
+  border: none !important;
+  font-size: 1.3rem;
+  box-shadow: none !important;
+}
+
+/* חודש */
+.react-datepicker__month {
+  margin: 15px;
+}
+
+/* תא של יום */
+.react-datepicker__day {
+  width: 4rem;     /* יותר רחב */
+  height: 4rem;    /* יותר גבוה */
+  line-height: 4rem;
+  margin: 0.4rem;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+}
+
+/* יום רגיל */
+.react-datepicker__day:hover {
+  background-color: rgba(255, 111, 97, 0.2);
+  color: #000;
+}
+
+/* יום נבחר */
+.react-datepicker__day--selected {
+  background-color: #ff6f61 !important;
+  color: #fff !important;
+  font-weight: bold;
+}
+
+/* יום חסום - כללי */
+.blocked-day {
+  background-color: #ccc !important;
+  color: #666 !important;
+  pointer-events: none !important;
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+}
+
+/* יום חסום מ-API חיצוני */
+.api-blocked-day {
+  background-color: #ff9999 !important;
+  color: #cc0000 !important;
+  border: 2px solid #ff0000 !important;
+}
+
+/* סוף שבוע */
+.weekend-day {
+  background-color: #e6e6e6 !important;
+  color: #999 !important;
+}
+
+/* יום עבר */
+.past-day {
+  background-color: #f0f0f0 !important;
+  color: #aaa !important;
+}
+
+/* יום חסום עם hover */
+.blocked-day:hover {
+  background-color: #ccc !important;
+  color: #666 !important;
+  transform: none !important;
+}
+
+/* כפתורים */
+.calendar-actions {
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.btn-next {
+  background: linear-gradient(90deg, #6a11cb, #2575fc);
+  color: white;
+  border: none;
+  padding: 14px 35px;
+  border-radius: 40px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-next:hover {
+  transform: scale(1.08);
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.3);
+}
+
+.btn-save {
+  background: linear-gradient(90deg, #28a745, #20c997);
+  color: white;
+  border: none;
+  padding: 14px 35px;
+  border-radius: 40px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-save:hover {
+  transform: scale(1.08);
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.3);
+}
+
+.btn-refresh {
+  background: linear-gradient(90deg, #17a2b8, #138496);
+  color: white;
+  border: none;
+  padding: 14px 35px;
+  border-radius: 40px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-refresh:hover:not(:disabled) {
+  transform: scale(1.08);
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.3);
+}
+
+.btn-refresh:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-test-api {
+  background: linear-gradient(90deg, #fd7e14, #e55a4e);
+  color: white;
+  border: none;
+  padding: 14px 35px;
+  border-radius: 40px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-test-api:hover:not(:disabled) {
+  transform: scale(1.08);
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.3);
+}
+
+.btn-test-api:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}

@@ -1,0 +1,387 @@
+.booking-container {
+  min-height: 100vh;
+  background: #f8f9fa;
+}
+
+.booking-hero {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 120px 2rem 80px;
+  color: white;
+  text-align: center;
+}
+
+.booking-title {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.booking-subtitle {
+  font-size: 1.3rem;
+  opacity: 0.9;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.booking-form-section {
+  padding: 5rem 0;
+}
+
+.booking-form-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Progress Bar */
+.progress-bar {
+  display: flex;
+  align-items: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f8f9ff 0%, #e8eeff 100%);
+  justify-content: center;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.step-number {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  color: #a0aec0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.step.active .step-number {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.step-label {
+  font-size: 0.9rem;
+  color: #4a5568;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.step.active .step-label {
+  color: #667eea;
+  font-weight: 600;
+}
+
+.progress-line {
+  width: 100px;
+  height: 2px;
+  background: #e2e8f0;
+  margin: 0 1rem;
+}
+
+/* Form Content */
+.form-content {
+  padding: 3rem;
+}
+
+.step-title {
+  font-size: 2rem;
+  color: #2d3748;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.form-grid {
+  display: grid;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  color: #2d3748;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.form-group input.error,
+.form-group select.error,
+.form-group textarea.error,
+.date-picker.error {
+  border-color: #e53e3e;
+  box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.1);
+}
+
+.error-message {
+  color: #e53e3e;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.date-time-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.date-picker {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.date-picker:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Confirmation Details */
+.confirmation-details {
+  display: grid;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.detail-group {
+  background: #f7fafc;
+  padding: 1.5rem;
+  border-radius: 10px;
+}
+
+.detail-group h3 {
+  color: #2d3748;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  border-bottom: 2px solid #667eea;
+  padding-bottom: 0.5rem;
+}
+
+.detail-group p {
+  color: #4a5568;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.detail-group strong {
+  color: #2d3748;
+}
+
+.important-note {
+  background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+  padding: 1.5rem;
+  border-radius: 10px;
+  border-right: 4px solid #e53e3e;
+  margin-bottom: 2rem;
+}
+
+.important-note h4 {
+  color: #c53030;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.important-note ul {
+  color: #4a5568;
+  padding-right: 1.5rem;
+  line-height: 1.6;
+}
+
+.important-note li {
+  margin-bottom: 0.5rem;
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.btn-back,
+.btn-next,
+.btn-submit {
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 150px;
+}
+
+.btn-back {
+  background: #e2e8f0;
+  color: #4a5568;
+}
+
+.btn-back:hover {
+  background: #cbd5e0;
+  transform: translateY(-2px);
+}
+
+.btn-next {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  margin-right: auto;
+}
+
+.btn-next:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+}
+
+.btn-submit {
+  background: linear-gradient(45deg, #48bb78, #38a169);
+  color: white;
+  margin-right: auto;
+}
+
+.btn-submit:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(72, 187, 120, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .booking-hero {
+    padding: 100px 1rem 60px;
+  }
+
+  .booking-title {
+    font-size: 2.5rem;
+  }
+
+  .form-content {
+    padding: 2rem;
+  }
+
+  .step-title {
+    font-size: 1.6rem;
+  }
+
+  .progress-bar {
+    padding: 1.5rem;
+  }
+
+  .progress-line {
+    width: 50px;
+  }
+
+  .step-label {
+    font-size: 0.8rem;
+  }
+
+  .date-time-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .btn-back,
+  .btn-next,
+  .btn-submit {
+    width: 100%;
+    margin: 0;
+  }
+
+  .btn-next,
+  .btn-submit {
+    order: 1;
+  }
+
+  .btn-back {
+    order: 2;
+    margin-top: 1rem;
+  }
+}
+
+/* React DatePicker Custom Styles */
+.react-datepicker {
+  font-family: inherit;
+  border: 2px solid #667eea;
+  border-radius: 10px;
+  direction: rtl;
+}
+
+.react-datepicker__header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+}
+
+.react-datepicker__current-month {
+  color: white;
+  font-weight: bold;
+}
+
+.react-datepicker__day-name {
+  color: white;
+}
+
+.react-datepicker__day:hover {
+  background: #667eea;
+  color: white;
+}
+
+.react-datepicker__day--selected {
+  background: #667eea;
+  color: white;
+}
+
+.react-datepicker__day--disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.react-datepicker__day--disabled:hover {
+  background: transparent;
+}

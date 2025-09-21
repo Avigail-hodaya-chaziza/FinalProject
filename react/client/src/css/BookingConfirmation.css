@@ -1,0 +1,374 @@
+.confirmation-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding-top: 80px;
+}
+
+.confirmation-content {
+  padding: 3rem 0;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.confirmation-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Success Header */
+.success-header {
+  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+  color: white;
+  text-align: center;
+  padding: 3rem 2rem;
+}
+
+.success-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  display: block;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-10px); }
+  60% { transform: translateY(-5px); }
+}
+
+.confirmation-title {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.confirmation-subtitle {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+/* Booking Details */
+.booking-details-section {
+  padding: 3rem;
+}
+
+.section-title {
+  font-size: 2rem;
+  color: #2d3748;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-weight: bold;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.detail-card {
+  background: linear-gradient(135deg, #f8f9ff 0%, #e8eeff 100%);
+  padding: 2rem;
+  border-radius: 15px;
+  display: flex;
+  align-items: flex-start;
+  border: 1px solid rgba(102, 126, 234, 0.1);
+  transition: all 0.3s ease;
+}
+
+.detail-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.15);
+}
+
+.detail-card.full-width {
+  grid-column: 1 / -1;
+}
+
+.detail-icon {
+  font-size: 2.5rem;
+  margin-left: 1rem;
+  flex-shrink: 0;
+}
+
+.detail-content h3 {
+  color: #2d3748;
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.detail-content p {
+  color: #4a5568;
+  line-height: 1.6;
+  margin-bottom: 0.3rem;
+}
+
+.detail-content strong {
+  color: #2d3748;
+  font-weight: 600;
+}
+
+/* Important Information */
+.important-info-section {
+  background: #f7fafc;
+  padding: 3rem;
+}
+
+.info-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.info-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: flex-start;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.info-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.info-icon {
+  font-size: 2rem;
+  margin-left: 1rem;
+  flex-shrink: 0;
+}
+
+.info-text h4 {
+  color: #2d3748;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.info-text p {
+  color: #4a5568;
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+/* Preparation Guidelines */
+.preparation-section {
+  padding: 3rem;
+}
+
+.preparation-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.preparation-card {
+  background: linear-gradient(135deg, #fff5f0 0%, #fed7cc 100%);
+  padding: 2rem;
+  border-radius: 15px;
+  border-right: 4px solid #ff8a65;
+}
+
+.preparation-card h4 {
+  color: #d84315;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+.preparation-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.preparation-card li {
+  color: #4a5568;
+  padding: 0.5rem 0;
+  position: relative;
+  padding-right: 1.5rem;
+}
+
+.preparation-card li:before {
+  content: '✓';
+  color: #ff8a65;
+  font-weight: bold;
+  position: absolute;
+  right: 0;
+}
+
+/* Policy Section */
+.policy-section {
+  background: #f7fafc;
+  padding: 3rem;
+}
+
+.policy-content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.policy-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.policy-icon {
+  font-size: 1.5rem;
+  margin-left: 1rem;
+  flex-shrink: 0;
+}
+
+.policy-item p {
+  color: #4a5568;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 3rem;
+  flex-wrap: wrap;
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-tertiary {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+  min-width: 180px;
+  text-align: center;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+}
+
+.btn-secondary {
+  background: linear-gradient(45deg, #48bb78, #38a169);
+  color: white;
+}
+
+.btn-secondary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(72, 187, 120, 0.3);
+}
+
+.btn-tertiary {
+  background: #e2e8f0;
+  color: #4a5568;
+}
+
+.btn-tertiary:hover {
+  background: #cbd5e0;
+  transform: translateY(-2px);
+}
+
+/* Contact Footer */
+.contact-footer {
+  background: #2d3748;
+  color: white;
+  text-align: center;
+  padding: 2rem;
+}
+
+.contact-footer p {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.contact-footer a {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.contact-footer a:hover {
+  color: #5a67d8;
+  text-decoration: underline;
+}
+
+/* Print Styles */
+@media print {
+  .navbar,
+  .action-buttons,
+  .contact-footer {
+    display: none !important;
+  }
+  
+  .confirmation-container {
+    background: white;
+    padding-top: 0;
+  }
+  
+  .confirmation-card {
+    box-shadow: none;
+    border: 1px solid #e2e8f0;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .confirmation-title {
+    font-size: 2rem;
+  }
+  
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .info-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .preparation-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .btn-primary,
+  .btn-secondary,
+  .btn-tertiary {
+    min-width: 250px;
+  }
+  
+  .booking-details-section,
+  .important-info-section,
+  .preparation-section,
+  .policy-section {
+    padding: 2rem;
+  }
+}

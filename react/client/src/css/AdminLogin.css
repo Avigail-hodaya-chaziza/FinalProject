@@ -1,0 +1,79 @@
+.admin-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  direction: rtl; /* יישור מימין לשמאל */
+}
+
+.admin-box {
+  background-color: rgba(255, 255, 255, 0.85); /* רקע לבן עם שקיפות עדינה */
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
+}
+
+.admin-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.admin-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #880e4f; /* ורוד יין כהה */
+  margin-bottom: 5px;
+}
+
+.admin-subtitle {
+  font-size: 1.2rem;
+  color: #4a4a4a;
+  margin-bottom: 30px;
+}
+
+.admin-actions-list {
+  list-style: none; /* הסרת תבליטים */
+  padding: 0;
+  margin: 0;
+}
+
+.admin-action-item {
+  margin-bottom: 15px; /* ריווח בין כפתורים */
+}
+
+.admin-action-link {
+  display: block;
+  width: 100%;
+  padding: 15px 20px;
+  background-color: #800020; /* ורוד יין */
+  color: white;
+  text-decoration: none; /* הסרת קו תחתון */
+  border-radius: 10px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.admin-action-link:hover {
+  background-color: #600018; /* ורוד יין כהה יותר */
+  transform: translateY(-2px);
+}
+
+/* התאמה למסכים קטנים */
+@media (max-width: 600px) {
+  .admin-box {
+    padding: 30px 20px;
+  }
+  .admin-title {
+    font-size: 2rem;
+  }
+  .admin-action-link {
+    font-size: 1rem;
+    padding: 12px 15px;
+  }
+}

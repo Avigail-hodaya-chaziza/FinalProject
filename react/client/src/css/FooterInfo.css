@@ -1,0 +1,54 @@
+.footer-info-section {
+  background-color: #222; /* צבע רקע כהה */
+  color: #ddd; /* צבע טקסט בהיר */
+  padding: 40px 20px;
+  font-family: Arial, sans-serif;
+  border-top: 3px solid #f0f0f0; /* קו עליון מפריד */
+}
+
+.footer-info-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap; /* מאפשר עטיפת טורים במסכים קטנים */
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.info-column {
+  flex: 1;
+  min-width: 200px;
+  margin: 10px;
+}
+
+.info-column h3 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #fff;
+}
+
+.info-column p, .info-column li {
+  font-size: 1rem;
+  margin-bottom: 8px;
+}
+
+.info-column ul {
+  list-style: none; /* הסרת נקודות מהרשימה */
+  padding: 0;
+}
+
+.info-column a {
+  color: #ddd;
+  text-decoration: none;
+}
+
+.info-column a:hover {
+  text-decoration: underline;
+}
+
+.copyright {
+  text-align: center;
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #444;
+  font-size: 0.9rem;
+}
