@@ -1,77 +1,75 @@
-בטח\! הנה קובץ ה-`README.md` המעודכן, המותאם להתמחות הבלעדית ב**החלקות שיער**, וכולל את תכונות **הזדהות גוגל**, **דירוג שירות** ועדכון הנתיבים להפעלה.
-
 -----
 
-# 💆‍♀️ Beauty Hair Straightening Scheduler - מערכת לניהול תורי החלקות שיער
+# 💆‍♀️ Beauty Hair Straightening Scheduler - Appointment Management System
 
-מערכת Full Stack לניהול תורים במכון יופי, עם התמחות בלעדית בתחום **החלקות השיער**. האפליקציה מאפשרת למנהלת ולעובדים לנהל באופן יעיל את לוח הזמנים, לצפות בתורים קיימים, ולהוסיף או לבטל תורים בקלות.
+A Full Stack system designed for managing appointments at a beauty salon, specializing exclusively in **Hair Straightening Treatments**. This application enables the manager and employees to efficiently oversee the schedule, view existing bookings, and easily add or cancel appointments.
 
-## ✨ תכונות עיקריות
+## ✨ Key Features
 
-  * **קביעת תורים אינטראקטיבית:** אפשרות לקבוע תורים לפי תאריך, שעה ומשך הטיפול **להחלקות שיער בלבד**.
-  * **ניהול שירותים ממוקד:** יצירה ועדכון של סוגי טיפולים המתמקדים אך ורק ב**החלקות שיער**.
-  * **ניהול תורים:** פונקציות לעדכון פרטי תור קיים או מחיקתו.
-  * **הזדהות משתמשים:** כניסה מאובטחת לאפליקציה באמצעות **שם משתמש וסיסמה** או דרך **Google Sign-In**.
-  * **מערכת דירוג:** יכולת ללקוחות **לדרג את השירות** לאחר סיום התור.
-  * **ממשק ניהול נוח:** לוח שנה אינטראקטיבי המציג את כל התורים בצורה ברורה.
+  * **Interactive Scheduling:** Ability to book appointments by date, time, and duration, focusing **only on hair straightening services**.
+  * **Focused Service Management:** Creation and updates of service types specifically for **hair straightening**.
+  * **Appointment Management:** Functions for updating existing appointment details or deleting them.
+  * **User Authentication:** Secure login using **username and password** or via **Google Sign-In**.
+  * **Rating System:** Ability for customers to **rate the service** after their appointment is complete.
+  * **User-Friendly Interface:** An interactive calendar providing a clear overview of all scheduled appointments.
 
-## 💻 טכנולוגיות
+## 💻 Technologies
 
-| קטגוריה | טכנולוגיות | תיאור |
+| Category | Technologies | Description |
 | :--- | :--- | :--- |
-| **Frontend** | `React`, `JavaScript`, `HTML`, `CSS` | ממשק משתמש אינטראקטיבי ומהיר. |
-| **Backend** | `C#`, `.NET Core 7+`, `Entity Framework` | לוגיקה עסקית, ניהול API ואינטראקציה עם מסד הנתונים. |
-| **Database** | `SQL Server` | אחסון נתונים (תורים, שירותים, עובדים). |
-| **API** | `Axios` | תקשורת א-סינכרונית בין ה-Frontend ל-Backend. |
+| **Frontend** | `React`, `JavaScript`, `HTML`, `CSS` | Interactive and fast user interface. |
+| **Backend** | `C#`, `.NET Core 7+`, `Entity Framework` | Business logic, API management, and database interaction. |
+| **Database** | `SQL Server` | Data storage (appointments, services, employees). |
+| **API** | `Axios` | Asynchronous communication between the Frontend and Backend. |
 
-## 🛠️ התקנה והפעלה
+## 🛠️ Installation and Setup
 
-כדי להפעיל את הפרויקט במחשב המקומי שלך, יש לוודא שכל דרישות הקדם מותקנות.
+To run the project on your local machine, ensure all prerequisites are installed.
 
-### 📜 דרישות מקדימות
+### 📜 Prerequisites
 
-1.  **Node.js:** גרסה `18` ומעלה.
-2.  **npm** (מותקן עם Node.js).
-3.  **.NET SDK:** גרסה `7` ומעלה.
-4.  **SQL Server:** נדרש שרת SQL Server או חיבור זמין למסד נתונים קיים.
-      * **עדכון Connection String:** יש לוודא שקובץ הגדרות השרת (`appsettings.json` בתיקיית `Server`) מכיל את מחרוזת החיבור (`Connection String`) הנכונה למסד הנתונים שלך.
+1.  **Node.js:** Version `18` or higher.
+2.  **npm** (Installed with Node.js).
+3.  **.NET SDK:** Version `7` or higher.
+4.  **SQL Server:** An SQL Server instance or a connection to an existing SQL database is required.
+      * **Update Connection String:** Ensure the server's settings file (`appsettings.json` in the `Server` folder) contains the correct `Connection String` for your database.
 
-### 1\. הפעלת השרת (Backend)
+### 1\. Running the Server (Backend)
 
-נווט אל תיקיית השרת והרץ את הפרויקט:
+Navigate to the server directory and start the project:
 
 ```bash
-# נווט לתיקיית השרת
+# Navigate to the Server directory
 cd "C:\Users\Administrator\Desktop\project full stack\FinalProject-main\FinalProject\Server"
 
-# ודא שהתלויות (dependencies) של .NET קיימות
+# Ensure .NET dependencies are restored
 dotnet restore
 
-# הפעל את השרת
+# Start the server
 dotnet run
 ```
 
-השרת יופעל בדרך כלל בפורט ברירת המחדל של ASP.NET Core (לדוגמה: `https://localhost:7001`).
+The server will typically run on the default ASP.NET Core port (e.g., `https://localhost:7001`).
 
 -----
 
-### 2\. הפעלת הלקוח (Frontend - React)
+### 2\. Running the Client (Frontend - React)
 
-פתח חלון טרמינל חדש (בנפרד מהשרת), נווט אל תיקיית הלקוח, והתקן והפעל את האפליקציה:
+Open a new terminal window (separate from the server), navigate to the client directory, and install and run the application:
 
 ```bash
-# נווט לתיקיית הלקוח (הנמצאת בתוך FinalProject-main)
+# Navigate to the Client directory (where package.json is located)
 cd "C:\Users\Administrator\Desktop\project full stack\FinalProject-main\FinalProject\Client"
 
-# התקן את התלויות של React
+# Install React dependencies
 npm install
 
-# הפעל את אפליקציית ה-React
+# Start the React application
 npm start
 ```
 
-### 🚀 גישה לאפליקציה
+### 🚀 Accessing the Application
 
-האפליקציה תרוץ באופן אוטומטי בדפדפן שלך בכתובת:
+The application will automatically open in your browser at:
 
 [**http://localhost:3000**](https://www.google.com/search?q=http://localhost:3000)
