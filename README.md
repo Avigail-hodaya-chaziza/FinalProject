@@ -1,6 +1,11 @@
 -----
 
 # 💆‍♀️ Beauty Hair Straightening Scheduler - Appointment Management System
+## 🎯 Problem Solved & Value Proposition
+
+Traditional phone booking for beauty treatments forces users to call during business hours, leading to frustration, extended wait times, and scheduling conflicts.
+
+Our project delivers a **simple, 24/7 accessible digital solution** that empowers clients to **secure an appointment instantly** at their convenience, eliminating the hassle of coordinating schedules by phone.
 
 A Full Stack system designed for managing appointments at a beauty salon, specializing exclusively in **Hair Straightening Treatments**. This application enables the manager and employees to efficiently oversee the schedule, view existing bookings, and easily add or cancel appointments.
 
