@@ -5,6 +5,7 @@ import '../css/home.css';
 
 import FooterInfo from './FooterInfo';
 import StarRating from './StarRating';
+import About from './About';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ const Home = () => {
         <p className="home-subtitle">
           המקום שלך לטיפולי שיער מתקדמים, החלקות ברמה הגבוהה ביותר ושירות אישי
         </p>
+        <About />
         <button className="home-btn" onClick={() => navigate('/treatments')}>
           ✨ קביעת תור עכשיו
         </button>

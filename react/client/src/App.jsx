@@ -15,6 +15,7 @@ import CustomerForm from './Slice/Customer/CustomerForm';
 import About from './pages/About';
 import UpdateTreatment from './Components/UpdateTreatment';
 import Bay from './pages/bay';
+import DeleteTreatments from './Components/DeleteTreatments';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
       <Route path="/CustomerForm" element={<CustomerForm />} />
       <Route path="/UpdateTreatment/:id" element={<UpdateTreatment />} />
       <Route path="/bay" element={<Bay />} />
+      <Route path="/DeleteTreatments" element={<DeleteTreatments />} />
     </Routes>
   );
 }

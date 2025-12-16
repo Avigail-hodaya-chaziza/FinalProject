@@ -78,6 +78,7 @@ const treatmentsSlice = createSlice({
       })
       .addCase(fetchTreatments.fulfilled, (state, action) => {
         state.loading = false;
+        console.log('💾 נתונים מהשרת:', action.payload);
         state.list = action.payload;
       })
       .addCase(fetchTreatments.rejected, (state, action) => {

@@ -37,9 +37,11 @@ function TreatmentsList() {
         }
       });
       
-      localStorage.setItem('selectedTreatment', treatment.treatmentName);
-      console.log('טיפול נבחר:', treatment.treatmentName);
-      navigate('/calendar', { state: { chosenTreatment: treatment.treatmentName } });
+      const treatmentName = treatment.treatmentName || treatment.TreatmentName;
+      localStorage.setItem('selectedTreatment', treatmentName);
+      console.log('טיפול נבחר:', treatmentName);
+      console.log('טיפול מלא:', treatment);
+      navigate('/calendar', { state: { chosenTreatment: treatmentName } });
     }
   };
 
@@ -83,11 +85,11 @@ function TreatmentsList() {
       <div className="treatments-grid">
         {Array.isArray(treatments) && treatments.length > 0 ? (
           treatments.map((t) => (
-            <div key={t.id} className="treatment-card">
-              <h3 className="treatment-name">{t.treatmentName}</h3>
-              <p className="treatment-info">⏱ משך: {t.timeOfCare} דקות</p>
-              <p className="treatment-info">💰 מחיר מינימלי: ₪{t.minPrice}</p>
-              <p className="treatment-description">{t.description}</p>
+            <div key={t.TreatmentId || t.id} className="treatment-card">
+              <h3 className="treatment-name">{t.TreatmentName || t.treatmentName}</h3>
+              <p className="treatment-info">⏱ משך: {t.TimeOfCare || t.timeOfCare} דקות</p>
+              <p className="treatment-info">💰 מחיר מינימלי: ₪{t.MinPrice || t.minPrice}</p>
+              <p className="treatment-description">{t.Description || t.description}</p>
               <div className="treatment-actions">
                 <button className="btn-select" onClick={() => handleSelect(t)}>{isEditMode ? 'ערוך' : 'בחרי'}</button>
               </div>

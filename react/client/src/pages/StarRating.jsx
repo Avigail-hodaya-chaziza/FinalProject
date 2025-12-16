@@ -7,32 +7,45 @@ const StarRating = () => {
   const [comment, setComment] = useState('');
   const [hover, setHover] = useState(0);
   const [customerName, setCustomerName] = useState('');
-  const [reviews, setReviews] = useState([]);
+  const [allReviews, setAllReviews] = useState([]);
   const [averageRating, setAverageRating] = useState(0);
   const [totalReviews, setTotalReviews] = useState(0);
   const [showForm, setShowForm] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(8);
+  const [loading, setLoading] = useState(true);
   
   useEffect(() => {
-    fetchReviews();
-    fetchAverageRating();
+    const loadData = async () => {
+      try {
+        await Promise.all([fetchReviews(), fetchAverageRating()]);
+      } catch (error) {
+        console.error('שגיאה בטעינת נתונים:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadData();
   }, []);
   
   const fetchReviews = async () => {
     try {
       const response = await api.get('/Review/GetAllReviews');
-      setReviews(response.data.slice(0, 3));
+      setAllReviews(response.data || []);
     } catch (error) {
       console.error('שגיאה בטעינת ביקורות:', error);
+      setAllReviews([]);
     }
   };
   
   const fetchAverageRating = async () => {
     try {
       const response = await api.get('/Review/GetAverageRating');
-      setAverageRating(response.data.averageRating);
-      setTotalReviews(response.data.totalReviews);
+      setAverageRating(response.data?.averageRating || 0);
+      setTotalReviews(response.data?.totalReviews || 0);
     } catch (error) {
       console.error('שגיאה בטעינת ממוצע דירוג:', error);
+      setAverageRating(0);
+      setTotalReviews(0);
     }
   };
 
@@ -49,9 +62,9 @@ const StarRating = () => {
     
     try {
       const reviewData = {
-        customerName,
-        rating,
-        comment: comment.trim() || null
+        CustomerName: customerName,
+        Rating: rating,
+        Comment: comment.trim() || null
       };
       
       await api.post('/Review/AddReview', reviewData);
@@ -70,9 +83,17 @@ const StarRating = () => {
     }
   };
 
+  if (loading) {
+    return (
+      <div className="rating-container">
+        <p>טוען נתונים...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="rating-container">
-      <h2>דירוגי לקוחות</h2>
+      <h2>דירוגי לקוחות ({allReviews.length} ביקורות)</h2>
       
       {/* ממוצע דירוג */}
       <div style={{ textAlign: 'center', marginBottom: '30px' }}>
@@ -99,12 +120,13 @@ const StarRating = () => {
             );
           })}
         </div>
+        <p>ממוצע: {averageRating.toFixed(1)} מתוך 5 ({totalReviews} ביקורות)</p>
 
       </div>
 
-      {/* ביקורות אחרונות */}
+      {/* ביקורות */}
       <div style={{ marginBottom: '20px' }}>
-        {reviews.map((review, index) => (
+        {allReviews.slice(0, visibleCount).map((review, index) => (
           <div key={index} style={{
             backgroundColor: '#f8f9fa',
             padding: '15px',
@@ -113,22 +135,44 @@ const StarRating = () => {
             border: '1px solid #e9ecef'
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-              <strong>{review.customerName}</strong>
+              <strong>{review?.CustomerName || review?.customerName || 'לקוח אנונימי'}</strong>
               <div className="stars">
-                {[...Array(5)].map((_, i) => (
-                  <span key={i} className={i < review.rating ? 'on' : 'off'}>
-                    &#9733;
-                  </span>
-                ))}
+                {[...Array(5)].map((_, i) => {
+                  const rating = review?.Rating || review?.rating || 0;
+                  return (
+                    <span key={i} style={{ color: i < rating ? '#ffc107' : '#ccc' }}>
+                      &#9733;
+                    </span>
+                  );
+                })}
               </div>
             </div>
-            {review.comment && (
+            {(review?.Comment || review?.comment) && (
               <p style={{ margin: 0, color: '#666', fontStyle: 'italic' }}>
-                "{review.comment}"
+                "{review?.Comment || review?.comment}"
               </p>
             )}
           </div>
         ))}
+        
+        {/* כפתור הצג עוד */}
+        {allReviews.length > visibleCount && (
+          <div style={{ textAlign: 'center', marginTop: '15px' }}>
+            <button
+              onClick={() => setVisibleCount(prev => prev + 8)}
+              style={{
+                backgroundColor: '#007bff',
+                color: 'white',
+                border: 'none',
+                padding: '10px 20px',
+                borderRadius: '5px',
+                cursor: 'pointer'
+              }}
+            >
+              הצג עוד
+            </button>
+          </div>
+        )}
       </div>
 
       {/* כפתור הוספת ביקורת */}

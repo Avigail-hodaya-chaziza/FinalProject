@@ -137,5 +137,5 @@ font-family: inherit;
   font-size: 0.9rem; /* גודל פונט קטן יותר */
   color: #555; /* צבע אפור כהה */
   margin-top: 5px;
-  text-align: right; /* יישור לימין */
+  text-align: center; /* יישור למרכז */
 }

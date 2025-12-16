@@ -27,6 +27,12 @@ const CustomerContacts = () => {
         api.get('/Treatment/GetAllTreatments')
       ]);
 
+      console.log('נתונים מהשרת:', {
+        appointments: appointmentsRes.data,
+        customers: customersRes.data,
+        treatments: treatmentsRes.data
+      });
+      
       setAppointments(appointmentsRes.data || []);
       setCustomers(customersRes.data || []);
       setTreatments(treatmentsRes.data || []);
@@ -39,12 +45,27 @@ const CustomerContacts = () => {
   };
 
   const getCustomerAppointments = (customerId) => {
-    return appointments.filter(apt => apt.customerId === customerId);
+    console.log('🔍 חיפוש תורים ללקוח:', customerId);
+    console.log('🔍 כל התורים:', appointments);
+    
+    const customerAppointments = appointments.filter(apt => 
+      apt.customerId === customerId || 
+      apt.CustomerId === customerId ||
+      String(apt.customerId) === String(customerId) ||
+      String(apt.CustomerId) === String(customerId)
+    );
+    
+    console.log('🔍 תורים שנמצאו:', customerAppointments);
+    return customerAppointments;
   };
 
   const getTreatmentName = (treatmentId) => {
-    const treatment = treatments.find(t => t.id === treatmentId);
-    return treatment ? treatment.treatmentName : 'לא נמצא';
+    const treatment = treatments.find(t => 
+      t.id === treatmentId || 
+      t.treatmentId === treatmentId ||
+      t.TreatmentId === treatmentId
+    );
+    return treatment ? (treatment.treatmentName || treatment.TreatmentName || treatment.name) : `לא נמצא (ID: ${treatmentId})`;
   };
 
   const handleContactCustomer = (customer) => {
@@ -83,9 +104,35 @@ const CustomerContacts = () => {
     <div className="contacts-container">
       <div className="contacts-header">
         <h2>יצירת קשר עם לקוחות</h2>
-        <button onClick={() => navigate('/AdminLogin')} className="btn-back">
-          חזור לניהול
-        </button>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <button 
+            onClick={fetchData} 
+            disabled={loading}
+            style={{
+              backgroundColor: '#007bff',
+              color: 'white',
+              border: 'none',
+              padding: '10px 20px',
+              borderRadius: '5px',
+              cursor: loading ? 'not-allowed' : 'pointer'
+            }}
+          >
+            {loading ? 'טוען...' : 'רענן נתונים'}
+          </button>
+          <button 
+            onClick={() => navigate('/AdminLogin')} 
+            style={{
+              backgroundColor: '#6c757d',
+              color: 'white',
+              border: 'none',
+              padding: '10px 20px',
+              borderRadius: '5px',
+              cursor: 'pointer'
+            }}
+          >
+            חזור לניהול
+          </button>
+        </div>
       </div>
 
       <div className="customers-list">

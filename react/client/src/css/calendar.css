@@ -47,9 +47,18 @@
 
 /* יום נבחר */
 .react-datepicker__day--selected {
-  background-color: #ff6f61 !important;
+  background-color: #8b4558 !important;
   color: #fff !important;
-  font-weight: bold;
+  font-weight: bold !important;
+  border: 2px solid #6d3544 !important;
+  box-shadow: 0 0 10px rgba(139, 69, 88, 0.5) !important;
+}
+
+.react-datepicker__day--selected:hover {
+  background-color: #6d3544 !important;
+  color: #fff !important;
+  transform: scale(1.05) !important;
+  box-shadow: 0 0 15px rgba(139, 69, 88, 0.8) !important;
 }
 
 /* יום חסום - כללי */
@@ -74,6 +83,57 @@
   color: #999 !important;
 }
 
+/* שבתות וחגים - אפור בהיר ולא ניתן ללחיצה */
+.weekend-disabled {
+  background-color: #f5f5f5 !important;
+  color: #bbb !important;
+  pointer-events: none !important;
+  cursor: not-allowed !important;
+  opacity: 0.6 !important;
+}
+
+.weekend-disabled:hover {
+  background-color: #f5f5f5 !important;
+  color: #bbb !important;
+  transform: none !important;
+}
+
+/* תאריכים חסומים ותפוסים - רק מספר אפור בהיר יותר */
+.transparent-disabled {
+  opacity: 1 !important;
+  pointer-events: none !important;
+  cursor: default !important;
+  background-color: transparent !important;
+  color: #bbb !important;
+  border: none !important;
+  font-weight: normal !important;
+  border-radius: 50% !important;
+}
+
+.transparent-disabled:hover {
+  background-color: transparent !important;
+  color: #bbb !important;
+  transform: none !important;
+  border: none !important;
+  border-radius: 50% !important;
+}
+
+/* ימים זמינים - ורוד יין קהה */
+.available-day {
+  background-color: #f5e8ed !important;
+  color: #8b4558 !important;
+  font-weight: bold !important;
+  border: 2px solid #8b4558 !important;
+  box-shadow: 0 2px 8px rgba(139, 69, 88, 0.3) !important;
+}
+
+.available-day:hover {
+  background-color: #edd9e1 !important;
+  color: #6d3544 !important;
+  transform: scale(1.05) !important;
+  box-shadow: 0 4px 12px rgba(139, 69, 88, 0.5) !important;
+}
+
 /* יום עבר */
 .past-day {
   background-color: #f0f0f0 !important;
@@ -85,6 +145,48 @@
   background-color: #ccc !important;
   color: #666 !important;
   transform: none !important;
+}
+
+/* היום הנוכחי */
+.today-highlight {
+  background-color: #a0506b !important;
+  color: #fff !important;
+  font-weight: bold !important;
+  border: 2px solid #c2185b !important;
+  box-shadow: 0 0 10px rgba(160, 80, 107, 0.5) !important;
+  position: relative;
+}
+
+.today-highlight::after {
+  content: 'היום';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.9rem;
+  color: #fff;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  white-space: nowrap;
+  z-index: 2;
+}
+
+.today-highlight:hover::after {
+  opacity: 1;
+}
+
+.today-highlight:hover {
+  color: transparent !important;
+}
+
+/* היום הראשון הפנוי */
+.first-available-highlight {
+  background-color: #f5e8ed !important;
+  color: #8b4558 !important;
+  font-weight: bold !important;
+  border: 2px solid #8b4558 !important;
+  box-shadow: 0 2px 8px rgba(139, 69, 88, 0.3) !important;
 }
 
 /* כפתורים */
@@ -113,7 +215,7 @@
 }
 
 .btn-save {
-  background: linear-gradient(90deg, #28a745, #20c997);
+  background: linear-gradient(90deg, #a0506b, #c2185b);
   color: white;
   border: none;
   padding: 14px 35px;

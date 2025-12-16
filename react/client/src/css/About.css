@@ -1,44 +1,42 @@
 .about-container {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  min-height: 100vh;
-  padding: 40px 20px;
+  background: linear-gradient(135deg, #fdf7f0 0%, #fef7f0 100%);
+  padding: 60px 20px;
+  margin: 40px 0;
+  border-radius: 20px;
   direction: rtl;
-  font-family: 'Rubik', sans-serif;
-  text-align: right;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
 }
 
 .about-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
   max-width: 800px;
+  margin: 0 auto;
 }
 
 .about-title {
-  font-size: 3rem;
-  font-weight: 700;
-  color: #880e4f;
-  margin-bottom: 30px;
+  font-size: 2.8rem;
+  font-weight: 300;
+  color: #2c2c2c;
+  margin-bottom: 40px;
   text-align: center;
+  font-family: 'Heebo', sans-serif;
+  letter-spacing: -0.5px;
 }
 
 .about-text-box {
-  background-color: rgba(255, 255, 255, 0.9); /* רקע לבן שקוף */
-  padding: 40px;
+  background: white;
+  padding: 50px;
   border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* צל עדין */
-  width: 100%;
-  box-sizing: border-box;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(233, 30, 99, 0.1);
 }
 
 .about-paragraph {
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   line-height: 1.8;
-  color: #333;
+  color: #4a4a4a;
   margin-bottom: 25px;
+  font-family: 'Heebo', sans-serif;
+  font-weight: 300;
 }
 
 .about-paragraph:last-child {
@@ -47,35 +45,47 @@
 
 .highlight-text {
   color: #e91e63;
-  font-weight: 700;
+  font-weight: 500;
+  background: linear-gradient(120deg, #e91e63, #ad1457);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
+
+
 
 /* התאמה למסכים קטנים */
 @media (max-width: 768px) {
+  .about-container {
+    padding: 40px 15px;
+    margin: 30px 0;
+  }
   .about-text-box {
-    padding: 30px;
+    padding: 35px;
   }
   .about-title {
-    font-size: 2.5rem;
-    margin-bottom: 25px;
+    font-size: 2.2rem;
   }
   .about-paragraph {
     font-size: 1rem;
-    line-height: 1.6;
-    margin-bottom: 20px;
+    line-height: 1.7;
   }
 }
 
 @media (max-width: 480px) {
+  .about-container {
+    padding: 30px 10px;
+    margin: 20px 0;
+  }
   .about-text-box {
-    padding: 20px;
+    padding: 25px;
   }
   .about-title {
-    font-size: 2rem;
-    margin-bottom: 20px;
+    font-size: 1.8rem;
   }
   .about-paragraph {
     font-size: 0.95rem;
-    margin-bottom: 15px;
+    line-height: 1.6;
+    margin-bottom: 20px;
   }
 }

@@ -1,42 +1,95 @@
 import React, { useEffect } from 'react';
 
 const GoogleLogin = ({ onSuccess, onError }) => {
-  const CLIENT_ID = '13990398172-ss8pscnksrjln81sjnrrt76u2pa3lg7e.apps.googleusercontent.com';
+  // החליפי ב-Client ID שלך שיש לו הרשאה ל-localhost:3000
+  const CLIENT_ID = '787460878575-dsii6n0tchb1i9ptm3o32pjvlddusv28.apps.googleusercontent.com';
+  
+  console.log('🔍 Google Login Component loaded');
   
   useEffect(() => {
-    // טעינת Google Identity Services
+    // בדוק אם הסקריפט כבר נטען
+    if (document.querySelector('script[src="https://accounts.google.com/gsi/client"]')) {
+      if (window.google && window.google.accounts) {
+        initializeGoogleSignIn();
+      }
+      return;
+    }
+
     const script = document.createElement('script');
     script.src = 'https://accounts.google.com/gsi/client';
     script.async = true;
     script.defer = true;
-    script.onload = initializeGoogleSignIn;
+    script.onload = () => {
+      console.log('✅ Google script loaded');
+      setTimeout(() => {
+        try {
+          initializeGoogleSignIn();
+        } catch (error) {
+          console.error('❌ שגיאה:', error);
+        }
+      }, 500);
+    };
     document.head.appendChild(script);
 
     return () => {
-      if (document.head.contains(script)) {
-        document.head.removeChild(script);
-      }
+      // לא להסיר את הסקריפט כי זה יכול לגרום לבעיות
     };
   }, []);
 
   const initializeGoogleSignIn = () => {
-    if (window.google) {
-      window.google.accounts.id.initialize({
-        client_id: CLIENT_ID,
-        callback: handleCredentialResponse,
-        auto_select: false,
-        cancel_on_tap_outside: true
-      });
-
-      window.google.accounts.id.renderButton(
-        document.getElementById('google-signin-button'),
-        {
-          theme: 'outline',
-          size: 'large',
-          text: 'signin_with',
-          width: 250
+    console.log('🔍 Google available:', !!window.google);
+    if (window.google && window.google.accounts) {
+      console.log('✅ Initializing Google Sign-In');
+      try {
+        window.google.accounts.id.initialize({
+          client_id: CLIENT_ID,
+          callback: handleCredentialResponse,
+          auto_select: false,
+          cancel_on_tap_outside: true,
+          use_fedcm_for_prompt: false
+        });
+      } catch (error) {
+        console.error('❌ שגיאה באיניציאליזציה של Google:', error);
+        if (error.message && error.message.includes('origin')) {
+          console.error('❌ הדומיין localhost:3000 לא מורשה עבור Client ID זה');
         }
-      );
+        return;
+      }
+
+      const buttonElement = document.getElementById('google-signin-button');
+      if (buttonElement) {
+        try {
+          window.google.accounts.id.renderButton(
+            buttonElement,
+            {
+              theme: 'outline',
+              size: 'large',
+              text: 'signin_with',
+              shape: 'rectangular',
+              logo_alignment: 'left',
+              width: '100%'
+            }
+          );
+        } catch (error) {
+          console.error('❌ שגיאה ביצירת כפתור Google:', error);
+          // אם נכשל, נציג הודעה
+          buttonElement.innerHTML = `
+            <div style="
+              padding: 15px;
+              text-align: center;
+              background: #f8f9fa;
+              border: 1px solid #dadce0;
+              border-radius: 8px;
+              color: #666;
+            ">
+              התחברות Google לא זמינה כרגע<br>
+              <small>אנא השתמש בהתחברות רגילה</small>
+            </div>
+          `;
+        }
+      }
+    } else {
+      console.error('❌ Google not available');
     }
   };
 
@@ -61,11 +114,21 @@ const GoogleLogin = ({ onSuccess, onError }) => {
   };
 
   return (
-    <div style={{ textAlign: 'center', margin: '20px 0' }}>
-      <div id="google-signin-button"></div>
-      <p style={{ color: '#666', fontSize: '12px', marginTop: '10px' }}>
-        אם הכפתור לא מופיע, בדוק את הגדרות Google Console
-      </p>
+    <div style={{ 
+      width: '100%', 
+      margin: '20px 0',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center'
+    }}>
+      <div 
+        id="google-signin-button" 
+        style={{ 
+          width: '100%',
+          maxWidth: '400px',
+          minHeight: '50px'
+        }}
+      ></div>
     </div>
   );
 };

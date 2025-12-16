@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getAllTreatments, addTreatment, UpdateTreatment, deleteTreatment } from '../../api/treatmentsApi';
+import { getAllTreatments, addTreatment, updateTreatment, deleteTreatment } from '../../Services/treatmentsApi';
 
 export const fetchTreatments = createAsyncThunk('treatments/fetchAll', async () => {
   const res = await getAllTreatments();

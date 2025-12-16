@@ -22,6 +22,10 @@ function IsContact() {
         api.get('/Treatment/GetAllTreatments')
       ]);
       
+      console.log('נתוני לקוחות מהשרת:', customersRes);
+      console.log('נתוני תורים מהשרת:', appointmentsRes.data);
+      console.log('נתוני טיפולים מהשרת:', treatmentsRes.data);
+      
       setCustomers(customersRes);
       setAppointments(appointmentsRes.data || []);
       setTreatments(treatmentsRes.data || []);
@@ -33,11 +37,16 @@ function IsContact() {
   };
 
   const handleChange = (field, value) => {
-    const updated = [...customers];
-    if (updated[currentIndex]) {
-      updated[currentIndex][field] = value;
-      setCustomers(updated);
-    }
+    setCustomers(prevCustomers => {
+      const updated = [...prevCustomers];
+      if (updated[currentIndex]) {
+        updated[currentIndex] = {
+          ...updated[currentIndex],
+          [field]: value
+        };
+      }
+      return updated;
+    });
   };
 
   const handleSave = async () => {
@@ -55,7 +64,7 @@ function IsContact() {
 
   const handleContacted = async () => {
     const customer = customers[currentIndex];
-    await contactCustomer(customer.customerId);
+    await contactCustomer(customer.CustomerId);
     alert('סומן שנוצר קשר');
     const updated = customers.filter((_, i) => i !== currentIndex);
     setCustomers(updated);
@@ -79,16 +88,29 @@ function IsContact() {
 
   const currentCustomer = customers[currentIndex];
   
+  console.log('לקוח נוכחי:', currentCustomer);
+  console.log('אינדקס נוכחי:', currentIndex);
+  console.log('כל הלקוחות:', customers);
+  
   // קבלת תורים של הלקוח הנוכחי
   const getCustomerAppointments = () => {
     if (!currentCustomer) return [];
-    return appointments.filter(apt => apt.customerId === currentCustomer.customerId);
+    
+    const customerId = currentCustomer.CustomerId || currentCustomer.customerId || currentCustomer.id;
+    
+    return appointments.filter(apt => {
+      const aptCustomerId = apt.CustomerId || apt.customerId;
+      return String(aptCustomerId) === String(customerId);
+    });
   };
   
   // קבלת שם טיפול
   const getTreatmentName = (treatmentId) => {
-    const treatment = treatments.find(t => t.treatmentId === treatmentId);
-    return treatment ? treatment.treatmentName : `לא נמצא (ID: ${treatmentId})`;
+    const treatment = treatments.find(t => {
+      const tId = t.TreatmentId || t.treatmentId || t.id;
+      return String(tId) === String(treatmentId);
+    });
+    return treatment ? (treatment.TreatmentName || treatment.treatmentName || treatment.name) : `לא נמצא (ID: ${treatmentId})`;
   };
 
   return (
@@ -120,8 +142,8 @@ function IsContact() {
                   <label>שם פרטי</label>
                   <input
                     type="text"
-                    value={currentCustomer.firstName}
-                    onChange={(e) => handleChange('firstName', e.target.value)}
+                    value={currentCustomer.FirstName || ''}
+                    onChange={(e) => handleChange('FirstName', e.target.value)}
                     placeholder="שם פרטי"
                     className="customer-input"
                     dir="rtl"
@@ -131,8 +153,8 @@ function IsContact() {
                   <label>שם משפחה</label>
                   <input
                     type="text"
-                    value={currentCustomer.lastName}
-                    onChange={(e) => handleChange('lastName', e.target.value)}
+                    value={currentCustomer.LastName || ''}
+                    onChange={(e) => handleChange('LastName', e.target.value)}
                     placeholder="שם משפחה"
                     className="customer-input"
                     dir="rtl"
@@ -142,8 +164,8 @@ function IsContact() {
                   <label>טלפון</label>
                   <input
                     type="text"
-                    value={currentCustomer.phoneNumber}
-                    onChange={(e) => handleChange('phoneNumber', e.target.value)}
+                    value={currentCustomer.PhoneNumber || ''}
+                    onChange={(e) => handleChange('PhoneNumber', e.target.value)}
                     placeholder="טלפון"
                     className="customer-input"
                     dir="rtl"
@@ -153,8 +175,8 @@ function IsContact() {
                   <label>אימייל</label>
                   <input
                     type="text"
-                    value={currentCustomer.email}
-                    onChange={(e) => handleChange('email', e.target.value)}
+                    value={currentCustomer.Email || ''}
+                    onChange={(e) => handleChange('Email', e.target.value)}
                     placeholder="אימייל"
                     className="customer-input"
                     dir="rtl"
@@ -171,10 +193,10 @@ function IsContact() {
                       getCustomerAppointments().map((apt, index) => (
                         <div key={index} className="appointment-item">
                           <span className="appointment-date">
-                            📅 {new Date(apt.scheduledTime).toLocaleDateString('he-IL')}
+                            📅 {new Date(apt.ScheduledTime || apt.scheduledTime).toLocaleDateString('he-IL')}
                           </span>
                           <span className="appointment-treatment">
-                            💆 {getTreatmentName(apt.treatmentId)}
+                            💆 {getTreatmentName(apt.TreatmentId || apt.treatmentId)}
                           </span>
                         </div>
                       ))

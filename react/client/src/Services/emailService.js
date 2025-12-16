@@ -1,32 +1,27 @@
 import emailjs from '@emailjs/browser';
 
-// הגדרות EmailJS - תחליפי עם הערכים שלך
-const SERVICE_ID = 'YOUR_SERVICE_ID';
-const TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
-const PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
+const SERVICE_ID = 'service_6o1ytua';
+const TEMPLATE_ID = 'template_dhy2bfh';
+const PUBLIC_KEY = 'GO7eErTz_TGC4PgpJ';
 
 export const sendAppointmentEmail = async (appointmentData) => {
   try {
-    console.log('נתוני התור שנשלחים:', appointmentData);
-    
     const templateParams = {
       to_email: 'avigail7790@gmail.com', // המייל שלך
-      customer_name: appointmentData.customerName,
-      customer_email: appointmentData.email,
-      customer_phone: appointmentData.phone,
+      customer_name: appointmentData.customer_Name,
+      customer_email: appointmentData.customer_email,
+      customer_phone: appointmentData.customer_phone,
       treatment: appointmentData.treatment,
-      appointment_date: appointmentData.date,
+      appointment_date: appointmentData.appointment_date,
       message: `
         פרטי התור החדש:
-        שם: ${appointmentData.customerName}
-        אימייל: ${appointmentData.email}
-        טלפון: ${appointmentData.phone}
+        שם: ${appointmentData.customer_Name}
+        אימייל: ${appointmentData.customer_email}
+        טלפון: ${appointmentData.customer_phone}
         טיפול: ${appointmentData.treatment}
-        תאריך: ${appointmentData.date}
+        תאריך: ${appointmentData.appointment_date}
       `
     };
-    
-    console.log('פרמטרים לEmailJS:', templateParams);
 
     const response = await emailjs.send(
       SERVICE_ID,

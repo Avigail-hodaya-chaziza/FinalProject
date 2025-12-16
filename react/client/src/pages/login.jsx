@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import CustomerForm from '../Slice/Customer/CustomerForm';
-import { FindByIdAndEmail } from '../Services/customerApi';
+import { FindByIdAndEmail, FindByNameAndEmail } from '../Services/customerApi';
 import { checkIfAdmin } from '../Services/adminApi';
 import { useDispatch } from 'react-redux';
 import { saveAppointment } from '../Slice/Appointment/AppointmentSlice';
@@ -9,33 +9,42 @@ import GoogleLogin from '../Components/GoogleLogin';
 import '../css/login.css';
 
 export default function Login() {
-  const [id, setId] = useState('');
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPasswordField, setShowPasswordField] = useState(false);
   const [isNewCustomer, setIsNewCustomer] = useState(false);
+  const [isProcessingGoogle, setIsProcessingGoogle] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
   const chosenTreatment = location.state?.chosenTreatment || localStorage.getItem('selectedTreatment') || '';
   const selectedDate = location.state?.selectedDate || localStorage.getItem('selectedDate') || '';
+  
+  // ניקוי תאריך ישן כשנכנסים לדף התחברות
+  useEffect(() => {
+    if (!location.state?.selectedDate) {
+      localStorage.removeItem('selectedDate');
+      localStorage.removeItem('selectedTreatment');
+    }
+  }, []);
 
-  const validateIsraeliId = (id) => {
-    if (!id) return true;
-    return /^\d{9}$/.test(id);
+  const validateName = (name) => {
+    if (!name) return false;
+    return name.trim().length >= 2;
   };
 
   const validateEmail = (email) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
 const handleLogin = async () => {
-    if (!id || !email) {
+    if (!name || !email) {
       alert('אנא מלא את כל השדות');
       return;
     }
 
-    if (!validateIsraeliId(id)) {
-      alert('תעודת זהות לא חוקית');
+    if (!validateName(name)) {
+      alert('אנא הכנס שם תקין (לפחות 2 אותיות)');
       return;
     }
 
@@ -45,9 +54,8 @@ const handleLogin = async () => {
     }
 
     try {
-      // ** שינוי כאן: העברת ה-id כמחרוזת
       // בדיקה אם זה מנהל לפי הפרטים
-      const isAdminCredentials = id === '214927790' && email.toLowerCase() === 'avigail7790@gmail.com';
+      const isAdminCredentials = name === 'אביגיל' && email.toLowerCase() === 'avigail7790@gmail.com';
       
       if (isAdminCredentials && !showPasswordField) {
         setShowPasswordField(true);
@@ -61,8 +69,8 @@ const handleLogin = async () => {
           return;
         }
         
-        console.log('שולח לשרת:', { id, email: email.toLowerCase(), password });
-        const admin = await checkIfAdmin(id, email.toLowerCase(), password);
+        console.log('שולח לשרת:', { name, email: email.toLowerCase(), password });
+        const admin = await checkIfAdmin(name, email.toLowerCase(), password);
         console.log('תוצאת בדיקת מנהל:', admin);
         console.log('האם יש שגיאה:', admin?.error);
         
@@ -72,8 +80,8 @@ const handleLogin = async () => {
           navigate('/AdminLogin', {
             state: {
               email,
-              id,
-              name: admin.name,
+              name,
+              adminName: admin.name,
               fullName: admin.fullName || admin.FullName
             },
           });
@@ -84,7 +92,7 @@ const handleLogin = async () => {
         }
       }
       
-      const found = await FindByIdAndEmail(id, email.toLowerCase());
+      const found = await FindByIdAndEmail(name, email.toLowerCase());
       
       console.log('תוצאת בדיקת לקוח:', found);
 
@@ -92,26 +100,39 @@ const handleLogin = async () => {
         alert(`ברוך הבא, ${found.data.email || email}!`);
         
 
-        // שמירת שם הלקוח
-        if (found.data?.firstName) {
-          localStorage.setItem('customerName', found.data.firstName);
-          console.log('שם לקוח נשמר:', found.data.firstName);
-        }
+        // עדכון נתוני הלקוח מההתחברות הרגילה
+        const fullName = found.data?.firstName && found.data?.lastName 
+          ? `${found.data.firstName} ${found.data.lastName}` 
+          : name;
+          
+        localStorage.setItem('customerName', fullName);
+        localStorage.setItem('customerFirstName', found.data?.firstName || name);
+        localStorage.setItem('customerLastName', found.data?.lastName || '');
+        localStorage.setItem('customerPhone', found.data?.phoneNumber || '');
+        localStorage.setItem('customerEmail', email);
+        localStorage.setItem('customerId', found.data?.customerId || name);
+        localStorage.setItem('loginMethod', 'regular');
+        
+        console.log('נתוני לקוח עודכנו:', {
+          name: fullName,
+          email: email,
+          phone: found.data?.phoneNumber
+        });
         
         // שמירה ב-Redux
         const appointmentData = {
-          customerId: id,
+          customerId: found.data?.customerId || name,
           email: email,
           treatment: chosenTreatment,
           scheduledTime: selectedDate
         };
         console.log('שמירת נתונים ב-Redux:', appointmentData);
         dispatch(saveAppointment(appointmentData));
-        navigate('/summary', { state: { email, id, treatment: chosenTreatment, selectedDate } });
+        navigate('/summary', { state: { email, name, treatment: chosenTreatment, selectedDate } });
       } else if (found.error?.includes("אימייל לא תואם")) {
         alert("האימייל אינו תואם לתעודת הזהות. נסה שנית.");
       } else {
-        navigate('/CustomerForm', { state: { initialId: id, initialEmail: email, treatment: chosenTreatment } });
+        navigate('/CustomerForm', { state: { initialName: name, initialEmail: email, treatment: chosenTreatment } });
       }
     } catch (error) {
       console.error("Login failed:", error);
@@ -125,32 +146,65 @@ const handleLogin = async () => {
   };
 
   const handleGoogleSuccess = (userInfo) => {
-    console.log('התחברות Google הצליחה:', userInfo);
+    // בדיקה מה יש שמור
+    console.log('כל ה-localStorage:', {
+      customerName: localStorage.getItem('customerName'),
+      customerPhone: localStorage.getItem('customerPhone'),
+      customerFirstName: localStorage.getItem('customerFirstName'),
+      customerLastName: localStorage.getItem('customerLastName')
+    });
     
-    // שמירת נתוני הלקוח
-    localStorage.setItem('customerName', userInfo.name);
+    const savedName = localStorage.getItem('customerName');
+    const savedPhone = localStorage.getItem('customerPhone');
     
-    // שמירה ב-Redux
-    const appointmentData = {
+    console.log('נתונים שמורים:', { savedName, savedPhone, googleName: userInfo.name });
+    
+    const fullName = userInfo.name || savedName || prompt('אנא הכנס את שמך המלא:');
+    const phoneNumber = savedPhone || prompt('אנא הכנס מספר טלפון:');
+    
+    if (!fullName || !phoneNumber) return;
+    
+    const [firstName, ...lastNameParts] = fullName.trim().split(' ');
+    const lastName = lastNameParts.join(' ');
+    
+    console.log('מעבד נתונים...', { fullName, firstName, lastName, phoneNumber });
+    
+    // שמירת נתונים
+    localStorage.setItem('customerName', fullName);
+    localStorage.setItem('customerPhone', phoneNumber);
+    localStorage.setItem('customerFirstName', firstName);
+    localStorage.setItem('customerLastName', lastName);
+    localStorage.setItem('customerEmail', userInfo.email);
+    localStorage.setItem('customerId', userInfo.id);
+    
+    console.log('נתונים נשמרו:', {
+      fullName, firstName, lastName, phoneNumber, email: userInfo.email
+    });
+    
+    // Redux
+    dispatch(saveAppointment({
       customerId: userInfo.id,
       email: userInfo.email,
       treatment: chosenTreatment,
       scheduledTime: selectedDate
-    };
+    }));
     
-    dispatch(saveAppointment(appointmentData));
+    console.log('עובר לדף סיכום...');
     
     // מעבר לדף הסיכום
     navigate('/summary', { 
       state: { 
         email: userInfo.email, 
         id: userInfo.id,
-        firstName: userInfo.firstName,
-        lastName: userInfo.lastName,
+        firstName,
+        lastName,
+        phoneNumber,
         treatment: chosenTreatment, 
         selectedDate 
       } 
     });
+    
+    setIsProcessingGoogle(false);
   };
   
   const handleGoogleError = (error) => {
@@ -160,7 +214,7 @@ const handleLogin = async () => {
 
   const handleSaveAppointment = () => {
     const appointmentData = {
-      customerId: id,
+      customerId: name,
       email: email,
       treatment: chosenTreatment,
     };
@@ -184,13 +238,13 @@ const handleLogin = async () => {
         <h2 className="login-title">התחברות למערכת</h2>
         <p className="login-subtitle">הכנס את פרטיך כדי להמשיך</p>
         <div className="input-group">
-          <label htmlFor="id-input">מספר תעודת זהות</label>
+          <label htmlFor="name-input">שם מלא</label>
           <input
-            id="id-input"
+            id="name-input"
             type="text"
-            placeholder="הקלד מספר ת.ז."
-            value={id}
-            onChange={(e) => setId(e.target.value)}
+            placeholder="הקלד שם מלא"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             className="login-input"
             dir="rtl"
           />

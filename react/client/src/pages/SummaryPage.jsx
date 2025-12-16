@@ -25,11 +25,11 @@ const SummaryPage = () => {
     if (lastName) localStorage.setItem('customerLastName', lastName);
     if (phoneNumber) localStorage.setItem('customerPhone', phoneNumber);
     
-    // בדיקה אם התור כבר נשמר
-    const saved = localStorage.getItem('appointmentSaved');
-    if (saved === 'true') {
-      setAppointmentSaved(true);
-    }
+    // נקה את appointmentSaved כדי שהמייל ישלח שוב
+    localStorage.removeItem('appointmentSaved');
+    setAppointmentSaved(false);
+    
+    console.log('🔄 ניקוי appointmentSaved');
   }, [email, id, firstName, lastName, phoneNumber]);
   
   const customerId = useSelector((state) => state.appointment.customerId) || id;
@@ -41,8 +41,19 @@ const SummaryPage = () => {
   const savedTreatment = localStorage.getItem('selectedTreatment');
   const savedDate = localStorage.getItem('selectedDate');
   
-  const finalTreatment = treatmentFromRedux || treatmentName || savedTreatment;
+  const finalTreatment = treatmentName || treatmentFromRedux || savedTreatment;
   const finalDate = scheduledTime || savedDate;
+  
+  console.log('🔍 בדיקת נתונים:', {
+    treatmentName,
+    treatmentFromRedux, 
+    savedTreatment,
+    finalTreatment,
+    finalDate,
+    firstName,
+    lastName,
+    email
+  });
 
   const customers = useSelector((state) => state.customers.customers);
   const treatments = useSelector((state) => state.treatments.treatments);
@@ -51,11 +62,59 @@ const SummaryPage = () => {
   const isTreatmentsLoading = useSelector(state => state.treatments.loading);
 
   useEffect(() => {
-    // טען טיפולים בלבד
+    // טען טיפולים ולקוחות
     if (!treatments || treatments.length === 0) {
       dispatch(fetchTreatments());
     }
-  }, [dispatch, treatments]);
+    if (!customers || customers.length === 0) {
+      dispatch(fetchCustomers());
+    }
+  }, [dispatch, treatments, customers]);
+
+  // שליחת מייל אוטומטית כשמגיעים לדף הסיכום
+  useEffect(() => {
+    const sendEmailNow = async () => {
+      console.log('🚀 שולח מייל עכשיו!');
+      
+      const savedEmail = email || localStorage.getItem('customerEmail') || 'avigail7790@gmail.com';
+      const savedFirstName = firstName || localStorage.getItem('customerFirstName') || 'לקוח';
+      const savedLastName = lastName || localStorage.getItem('customerLastName') || 'חדש';
+      const savedPhone = phoneNumber || localStorage.getItem('customerPhone') || '050-1234567';
+      
+      const summary = {
+        customerName: `${savedFirstName} ${savedLastName}`,
+        email: savedEmail,
+        phone: savedPhone,
+        treatment: finalTreatment || 'החלקת שיער',
+        date: finalDate || 'לא נבחר'
+      };
+      
+      console.log('🔴 שם:', summary.customerName);
+      console.log('🔴 אימייל:', summary.email);
+      console.log('🔴 טלפון:', summary.phone);
+      
+      try {
+        const emailResult = await sendAppointmentEmail(summary);
+        console.log('✅ תוצאת מייל:', emailResult);
+        
+        // חסימת התאריך בלוח השנה
+        try {
+          const { blockDate } = await import('../Services/blockedSlotApi');
+          await blockDate(finalDate);
+        } catch (blockError) {
+          console.error('❌ שגיאה בחסימת תאריך:', blockError);
+        }
+      } catch (error) {
+        console.error('❌ שגיאה:', error);
+      }
+    };
+    
+    // שלח מייל רק פעם אחת
+    if (!appointmentSaved) {
+      sendEmailNow();
+      setAppointmentSaved(true);
+    }
+  }, []);
 
   const customer = customers?.find((c) => c.id === customerId || c.customerId === customerId);
   const treatment = treatments?.find((t) => t.id === treatmentId || t.treatmentId === treatmentId);
@@ -203,69 +262,7 @@ const SummaryPage = () => {
             </div>
           </div>
         
-        <button onClick={async () => {
-          try {
-            // שמירת התור בשרת
-            const appointmentData = {
-              CustomerId: customerId || id,
-              ScheduledTime: finalDate,
-              TreatmentId: treatmentId || 1 // אם אין treatmentId, שים 1 כברירת מחדל
-            };
-            
-            console.log('שמירת תור:', appointmentData);
-            await saveAppointment(appointmentData);
-            
-            const summary = {
-              customerName,
-              email: email || 'לא נמצא',
-              phone: phoneNumber || customer?.phoneNumber || 'לא נמצא',
-              treatment: finalTreatment || 'לא נבחר',
-              date: finalDate || 'לא נבחר'
-            };
-            console.log('שליחת סיכום למנהלת:', summary);
-            
-            // שליחת מייל
-            const emailResult = await sendAppointmentEmail(summary);
-            
-            if (emailResult.success) {
-              alert("התור נשמר בהצלחה והפרטים נשלחו למייל!");
-            } else {
-              alert("התור נשמר בהצלחה אך הייתה בעיה בשליחת המייל.");
-            }
-            
-            // סימון שהתור נשמר
-            localStorage.setItem('appointmentSaved', 'true');
-            setAppointmentSaved(true);
-            
-            // מעבר אוטומטי לדף הסיום עם השם
-            navigate('/bay', { 
-              state: { 
-                firstName, 
-                lastName, 
-                customerName,
-                email,
-                phoneNumber
-              } 
-            });
-          } catch (error) {
-            console.error('שגיאה בשמירת התור:', error);
-            alert('שגיאה בשמירת התור');
-          }
-        }} style={{
-          display: appointmentSaved ? 'none' : 'block',
-          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-          color: 'white',
-          border: 'none',
-          padding: '15px 30px',
-          borderRadius: '25px',
-          fontSize: '1.1rem',
-          fontWeight: 'bold',
-          cursor: 'pointer',
-          transition: 'all 0.3s ease',
-          boxShadow: '0 8px 20px rgba(102, 126, 234, 0.3)'
-        }}>
-          שמור תור ✨
-        </button>
+
         
         {appointmentSaved && (
           <div style={{

@@ -23,10 +23,7 @@ export default function AdminLogin() {
             <Link to="/AddTreatmentForm" className="admin-action-link">הוספת טיפול</Link>
           </li>
           <li className="admin-action-item">
-            <Link to="/treatments?mode=edit" className="admin-action-link">עריכת טיפול</Link>
-          </li>
-          <li className="admin-action-item">
-            <Link to="/TreatmentTypes" className="admin-action-link">מחיקת טיפול</Link>
+            <Link to="/DeleteTreatments" className="admin-action-link">מחיקת ועריכת טיפולים</Link>
           </li>
           <li className="admin-action-item">
             <Link to="/IsContact" className="admin-action-link">יצירת קשר עם לקוחות</Link>
