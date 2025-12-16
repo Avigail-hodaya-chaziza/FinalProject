@@ -1,17 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace Server.webApi.DTOs
 {
     public class CustomerDto
     {
-        [NineDigitAttribute]
-        public string customerId { get; set; }
-        
+        public int CustomerId { get; set; }
         [Required]
-        public string FirstName { get; set; } = string.Empty;
-
-        [Required]
-        public string LastName { get; set; } = string.Empty;
+        public string FullName { get; set; } = string.Empty;
 
         [Required]
         public string PhoneNumber { get; set; } = string.Empty;
@@ -19,5 +14,4 @@ namespace Server.webApi.DTOs
         [EmailAddress]
         public string Email { get; set; } = string.Empty;
     }
-
 }

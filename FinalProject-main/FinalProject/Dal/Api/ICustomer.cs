@@ -1,4 +1,4 @@
-﻿using Dal.Models;
+using Dal.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,29 +10,13 @@ namespace Dal.Api
 {
     internal interface ICustomer
     {
-        //// פונקציה להוספת לקוח לתור
-        //void AddCustomer(int CustomerId, string FirstName, string LastName, string PhoneNumber, string Email, bool IsContacted);
-        //// פונקציה שבודקת אם יצרו קשר עם הלקןח
-        //void ContactCustomer(int CustomerId);
-        ////פונקציה לשינוי פרטי לקוח
-        //void UpdateCustomer(int CustomerId, string FirstName, string LastName, string PhoneNumber, string Email);
-        //// פונקציה שמראה את כל הלקוחות שקבעו תור ועדיין לא יצרו איתם קשר טלפוני
-        //List<Customer> GetCustomer(int CustomerId);
-         List<Customer> GetAllCustomers();
-        void UpdateCustomer(string customerId, string firstName,
-            string lastName, string phoneNumber, string email);
-
-        void ContactCustomer(string customerId);
-
+        List<Customer> GetAllCustomers();
+        void UpdateCustomer(int customerId, string fullName, string phoneNumber, string email);
+        void ContactCustomer(int customerId);
         List<Customer> GetUncontactedCustomers();
-
-         Customer? GetCustomerById(string customerId);
-
-         void AddCustomer(Customer customer);
-        bool ExistsById(string customerId);
-        Customer FindByIdAndEmail(string customerId, string email);
-
+        Customer? GetCustomerById(int customerId);
+        void AddCustomer(Customer customer);
+        bool ExistsByName(string name);
+        Customer FindByNameAndEmail(string name, string email);
     }
-
 }
-

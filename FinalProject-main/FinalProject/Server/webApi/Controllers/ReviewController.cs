@@ -43,6 +43,7 @@ namespace Server.webApi.Controllers
                 var reviews = await _context.Reviews
                     .OrderByDescending(r => r.CreatedAt)
                     .ToListAsync();
+                
                 return Ok(reviews);
             }
             catch (Exception ex)

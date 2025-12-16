@@ -7,7 +7,7 @@ public partial class Appointment
 {
     public int AppointmentId { get; set; }
 
-    public string CustomerId { get; set; }
+    public int CustomerId { get; set; }
 
     public int TreatmentId { get; set; }
 
@@ -30,7 +30,7 @@ public partial class Appointment
     //    Customer = customer;
     //    Treatment = treatment;
     //}
-    public Appointment(string customerId, int treatmentId, DateOnly scheduledTime)
+    public Appointment(int customerId, int treatmentId, DateOnly scheduledTime)
     {
         CustomerId = customerId;
         TreatmentId = treatmentId;

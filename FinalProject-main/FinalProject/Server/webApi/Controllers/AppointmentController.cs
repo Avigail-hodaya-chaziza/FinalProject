@@ -101,7 +101,7 @@ namespace Server.webApi.Controllers
         }
 
         [HttpGet("GetAppointmentsByCustomerId/{customerId}")]
-        public ActionResult<List<Appointment>> GetAppointmentsByCustomerId([FromBody] string customerId)
+        public ActionResult<List<Appointment>> GetAppointmentsByCustomerId(int customerId)
         {
             var appointments = _appointmentBl.GetAppointmentsByCustomerId(customerId);
             return Ok(appointments);

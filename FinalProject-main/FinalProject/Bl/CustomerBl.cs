@@ -1,4 +1,4 @@
-﻿using Dal.Api;
+using Dal.Api;
 using Dal.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -20,34 +20,30 @@ namespace Bl
             return _customerDal.GetAllCustomers();
         }
 
-        public void AddCustomer(string customerId, string firstName, string lastName, string phoneNumber, string email, bool isContacted)
+        public void AddCustomer(string fullName, string phoneNumber, string email)
         {
             // בדיקות תקינות
-            if (string.IsNullOrWhiteSpace(firstName))
+            if (string.IsNullOrWhiteSpace(fullName))
                 throw new ArgumentException("Name cannot be empty");
-            if (string.IsNullOrWhiteSpace(lastName))
-                throw new ArgumentException("Last name cannot be empty");
             if (string.IsNullOrWhiteSpace(phoneNumber))
                 throw new ArgumentException("Phone number cannot be empty");
             if (string.IsNullOrWhiteSpace(email))
                 throw new ArgumentException("Email cannot be empty");
 
             // יצירת לקוח חדש
-            var newCustomer = new Customer(customerId, firstName, lastName, phoneNumber, email, isContacted);
+            var newCustomer = new Customer(fullName, phoneNumber, email);
 
-            // שמירתו בדאטה (לפי ההקשר – אתה צריך פונקציה ב-DAL שמכניסה ל-DB אם תתבסס על זה בעתיד)
-            Console.WriteLine($"Client {firstName} {lastName} has been added to the queue.");
-            // הערה: אם אתה רוצה שה-Add באמת תכניס למסד נתונים – תצטרך להוסיף פונקציה כזו ל־DAL
+            Console.WriteLine($"Client {fullName} has been added to the queue.");
             _customerDal.AddCustomer(newCustomer);
         }
 
-        public void UpdateCustomer(string customerId, string firstName, string lastName, string phoneNumber, string email)
+        public void UpdateCustomer(int customerId, string fullName, string phoneNumber, string email)
         {
-            _customerDal.UpdateCustomer(customerId, firstName, lastName, phoneNumber, email);
-            Console.WriteLine($"Customer {firstName} {lastName} has been updated.");
+            _customerDal.UpdateCustomer(customerId, fullName, phoneNumber, email);
+            Console.WriteLine($"Customer {fullName} has been updated.");
         }
 
-        public void ContactCustomer(string customerId)
+        public void ContactCustomer(int customerId)
         {
             _customerDal.ContactCustomer(customerId);
             Console.WriteLine($"Customer with ID {customerId} has been contacted.");
@@ -58,20 +54,19 @@ namespace Bl
             var customers = _customerDal.GetUncontactedCustomers();
             foreach (var c in customers)
             {
-                Console.WriteLine($"ID: {c.CustomerId}, Name: {c.FirstName} {c.LastName}, Phone: {c.PhoneNumber}, Email: {c.Email}");
+                Console.WriteLine($"ID: {c.CustomerId}, Name: {c.FullName}, Phone: {c.PhoneNumber}, Email: {c.Email}");
             }
             return customers;
         }
 
-        public Customer FindByIdAndEmail(string customerId, string email)
+        public Customer FindByNameAndEmail(string name, string email)
         {
-            return _customerDal.FindByIdAndEmail(customerId, email);
+            return _customerDal.FindByNameAndEmail(name, email);
         }
 
-        public bool ExistsById(string customerId)
+        public bool ExistsByName(string name)
         {
-            return _customerDal.ExistsById(customerId);
+            return _customerDal.ExistsByName(name);
         }
-
     }
 }

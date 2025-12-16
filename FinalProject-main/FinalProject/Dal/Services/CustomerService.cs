@@ -1,8 +1,6 @@
-﻿// DAL - אחראית לגישה לנתונים בלבד
+// DAL - אחראית לגישה לנתונים בלבד
 using Dal.Api;
 using Dal.Models;
-
-
 
 public class CustomerService : ICustomer
 {
@@ -16,8 +14,7 @@ public class CustomerService : ICustomer
             .Select(c => new Customer
             {
                 CustomerId = c.CustomerId,
-                FirstName = c.FirstName,
-                LastName = c.LastName,
+                FullName = c.FullName,
                 PhoneNumber = c.PhoneNumber,
                 Email = c.Email,
             })
@@ -26,7 +23,7 @@ public class CustomerService : ICustomer
         return customers;
     }
 
-    public Customer? GetCustomerById(string customerId)
+    public Customer? GetCustomerById(int customerId)
     {
         return _dbContext.Customers.FirstOrDefault(c => c.CustomerId == customerId);
     }
@@ -37,22 +34,20 @@ public class CustomerService : ICustomer
         _dbContext.SaveChanges();
     }
 
-
-    public void UpdateCustomer(string customerId, string firstName, string lastName, string phoneNumber, string email)
+    public void UpdateCustomer(int customerId, string fullName, string phoneNumber, string email)
     {
         var customer = _dbContext.Customers.FirstOrDefault(c => c.CustomerId == customerId);
         if (customer == null)
             throw new ArgumentException($"Customer with ID {customerId} does not exist.");
 
-        customer.FirstName = firstName;
-        customer.LastName = lastName;
+        customer.FullName = fullName;
         customer.PhoneNumber = phoneNumber;
         customer.Email = email;
 
         _dbContext.SaveChanges();
     }
 
-    public void ContactCustomer(string customerId)
+    public void ContactCustomer(int customerId)
     {
         var customer = _dbContext.Customers.FirstOrDefault(c => c.CustomerId == customerId);
         if (customer == null)
@@ -68,13 +63,13 @@ public class CustomerService : ICustomer
         return customer;
     }
 
-    public Customer FindByIdAndEmail(string customerId, string email)
+    public Customer FindByNameAndEmail(string name, string email)
     {
-        return _dbContext.Customers.FirstOrDefault(c => c.CustomerId == customerId && c.Email == email);
+        return _dbContext.Customers.FirstOrDefault(c => c.FullName == name && c.Email == email);
     }
 
-    public bool ExistsById(string customerId)
+    public bool ExistsByName(string name)
     {
-        return _dbContext.Customers.Any(c => c.CustomerId == customerId);
+        return _dbContext.Customers.Any(c => c.FullName == name);
     }
 }

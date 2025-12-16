@@ -33,7 +33,7 @@
 
         public class InvalidEmailForCustomerException : Exception
         {
-            public InvalidEmailForCustomerException(string customerId)
+            public InvalidEmailForCustomerException(int customerId)
                 : base($"מספר הלקוח {customerId} קיים אך האימייל שגוי.")
             {
             }

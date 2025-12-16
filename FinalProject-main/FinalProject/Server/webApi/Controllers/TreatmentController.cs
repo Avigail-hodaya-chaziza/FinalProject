@@ -34,12 +34,12 @@ namespace Server.webApi.Controllers
         }
 
         [HttpGet("GetAllTreatments")]
-        public ActionResult<List<CustomerDto>> GetAllTreatments()
+        public ActionResult GetAllTreatments()
         {
             try
             {
                 var treatments = _treatmentBl.GetAllTreatments();
-                return Ok(treatments); // מחזיר 200 OK עם רשימת טיפולים.
+                return Ok(treatments);
             }
             catch (Exception ex)
             {
@@ -80,7 +80,7 @@ namespace Server.webApi.Controllers
         //}
 
         [HttpPut("UpdateTreatment/{id}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
 
         public IActionResult UpdateTreatment(int id, [FromBody] TreatmentDTOs dto)
         {
@@ -97,7 +97,7 @@ namespace Server.webApi.Controllers
 
 
         [HttpDelete("DeleteTreatment/{id}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
 
         public IActionResult DeleteTreatment(int id)
         {

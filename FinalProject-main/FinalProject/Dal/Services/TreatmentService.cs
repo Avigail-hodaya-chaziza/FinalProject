@@ -107,18 +107,7 @@ namespace Dal.Services
 
         public List<Treatment> GetAllTreatments()
         {
-            var treatment = _context.Treatments
-                .Select(t => new Treatment
-                {
-                    TreatmentId = t.TreatmentId,
-                    TreatmentName = t.TreatmentName,
-                    TimeOfCare = t.TimeOfCare,
-                    MinPrice = t.MinPrice,
-                    Appointments = t.Appointments
-                })
-                .ToList();
-
-            return treatment;
+            return _context.Treatments.ToList();
         }
 
         //למה צריך את זה?

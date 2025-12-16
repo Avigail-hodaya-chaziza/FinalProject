@@ -11,7 +11,7 @@ namespace Server.webApi.DTOs
         public DateOnly ScheduledTime { get; set; }
 
         [Required]
-        public virtual string CustomerId { get; set; }
+        public virtual int CustomerId { get; set; }
 
         [Required]
         //public virtual Treatment Treatment { get; set; }

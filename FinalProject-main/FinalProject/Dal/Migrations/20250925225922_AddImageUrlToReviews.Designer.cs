@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dal.Migrations
 {
     [DbContext(typeof(dbClass))]
-    [Migration("20250716213531_Updated_migration")]
-    partial class Updated_migration
+    [Migration("20250925225922_AddImageUrlToReviews")]
+    partial class AddImageUrlToReviews
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,7 +35,8 @@ namespace Dal.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AppointmentId"));
 
                     b.Property<int>("CustomerId")
-                        .HasColumnType("int")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("CustomerID");
 
                     b.Property<DateOnly>("ScheduledTime")
@@ -76,8 +77,8 @@ namespace Dal.Migrations
                         .HasColumnType("char(2)")
                         .IsFixedLength();
 
-                    b.Property<DateOnly>("Date")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("HolidayName")
                         .IsRequired()
@@ -99,7 +100,7 @@ namespace Dal.Migrations
             modelBuilder.Entity("Dal.Models.Customer", b =>
                 {
                     b.Property<int>("CustomerId")
-                        .HasColumnType("int")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("CustomerID");
 
                     b.Property<string>("Email")
@@ -129,6 +130,42 @@ namespace Dal.Migrations
                     b.ToTable("Customers");
                 });
 
+            modelBuilder.Entity("Dal.Models.Review", b =>
+                {
+                    b.Property<int>("ReviewId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReviewId"));
+
+                    b.Property<string>("Comment")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CustomerName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.HasKey("ReviewId");
+
+                    b.ToTable("Reviews");
+                });
+
             modelBuilder.Entity("Dal.Models.Treatment", b =>
                 {
                     b.Property<int>("TreatmentId")
@@ -137,6 +174,10 @@ namespace Dal.Migrations
                         .HasColumnName("TreatmentID");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TreatmentId"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("MinPrice")
                         .HasColumnType("decimal(10, 2)");

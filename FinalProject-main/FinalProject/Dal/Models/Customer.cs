@@ -5,11 +5,9 @@ namespace Dal.Models;
 
 public partial class Customer
 {
-    public string CustomerId { get; set; }
+    public int CustomerId { get; set; }
 
-    public string FirstName { get; set; } = null!;
-
-    public string LastName { get; set; } = null!;
+    public string FullName { get; set; } = null!;
 
     public string PhoneNumber { get; set; } = null!;
 
@@ -18,16 +16,15 @@ public partial class Customer
     public bool IsContacted { get; set; }
 
     public virtual ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
+    
     public Customer()
     { }
-    public Customer(string customerId, string firstName, string lastName, string phoneNumber, string email, bool isContacted)
+    
+    public Customer(string fullName, string phoneNumber, string email, bool isContacted = false)
     {
-        CustomerId = customerId;
-        FirstName = firstName;
-        LastName = lastName;
+        FullName = fullName;
         PhoneNumber = phoneNumber;
         Email = email;
         IsContacted = isContacted;
-
     }
 }

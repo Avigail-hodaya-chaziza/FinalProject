@@ -33,8 +33,7 @@ namespace Dal.Migrations
                 columns: table => new
                 {
                     CustomerID = table.Column<int>(type: "int", nullable: false),
-                    FirstName = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false),
-                    LastName = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false),
+                    FullName = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false),
                     PhoneNumber = table.Column<string>(type: "varchar(15)", unicode: false, maxLength: 15, nullable: false),
                     Email = table.Column<string>(type: "varchar(255)", unicode: false, maxLength: 255, nullable: false),
                     IsContacted = table.Column<bool>(type: "bit", nullable: false)

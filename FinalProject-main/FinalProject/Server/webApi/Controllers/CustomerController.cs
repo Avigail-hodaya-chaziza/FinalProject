@@ -20,21 +20,26 @@ namespace Server.webApi.Controllers
         {
             try
             {
-                Console.WriteLine("קיבלנו לקוח:");
+                Console.WriteLine($"קיבלנו לקוח: {customerDto.FullName}, {customerDto.PhoneNumber}, {customerDto.Email}");
 
-                // הערך של isContacted יהיה תמיד true כשלא מצוין אחרת (אתה יכול לשנות את זה לפי הצורך)
-                bool isContacted = false;  // ניתן לשנות פה אם יש לך לוגיקה אחרת לקביעת הערך
+                if (!ModelState.IsValid)
+                {
+                    Console.WriteLine("ModelState לא תקין:");
+                    foreach (var error in ModelState)
+                    {
+                        Console.WriteLine($"{error.Key}: {string.Join(", ", error.Value.Errors.Select(e => e.ErrorMessage))}");
+                    }
+                    return BadRequest(ModelState);
+                }
 
-                // קריאה לפונקציה ב-BL
-                _customerBl.AddCustomer(customerDto.customerId, customerDto.FirstName,
-                    customerDto.LastName, customerDto.PhoneNumber, customerDto.Email, isContacted);
+                _customerBl.AddCustomer(customerDto.FullName, customerDto.PhoneNumber, customerDto.Email);
 
                 return Ok("Customer added successfully.");
             }
-            catch (ArgumentException ex)
+            catch (Exception ex)
             {
-                // אם יש בעיה בנתונים, מחזירים הודעת שגיאה
                 Console.WriteLine("שגיאה בשרת: " + ex.Message);
+                Console.WriteLine("Stack trace: " + ex.StackTrace);
                 return StatusCode(500, new { error = "שגיאה בשרת", details = ex.Message });
             }
         }
@@ -61,8 +66,8 @@ namespace Server.webApi.Controllers
 
             try
             {
-                _customerBl.UpdateCustomer(customerDto.customerId, customerDto.FirstName,
-                    customerDto.LastName, customerDto.PhoneNumber, customerDto.Email);
+                _customerBl.UpdateCustomer(customerDto.CustomerId, customerDto.FullName,
+                    customerDto.PhoneNumber, customerDto.Email);
                 return Ok("Customer updated successfully.");
             }
             catch (ArgumentException ex)
@@ -76,10 +81,10 @@ namespace Server.webApi.Controllers
         }
 
         [HttpPut("contact/{customerId}")]
-        [Authorize(Roles = "Admin")]
-
-        public IActionResult ContactCustomer([FromBody] string customerId)
+        [AllowAnonymous]
+        public IActionResult ContactCustomer(int customerId)
         {
+            Console.WriteLine($"ContactCustomer called with ID: {customerId}");
             try
             {
                 _customerBl.ContactCustomer(customerId);
@@ -87,10 +92,12 @@ namespace Server.webApi.Controllers
             }
             catch (ArgumentException ex)
             {
+                Console.WriteLine($"ArgumentException: {ex.Message}");
                 return NotFound(ex.Message); // לקוח לא קיים
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"Exception: {ex.Message}");
                 return StatusCode(500, $"Internal error: {ex.Message}");
             }
         }
@@ -110,18 +117,17 @@ namespace Server.webApi.Controllers
             }
         }
 
-        [HttpGet("FindByIdAndemail")]
-        public IActionResult FindByIdAndemail(string customerId, string email)
+        [HttpGet("FindByNameAndEmail")]
+        public IActionResult FindByNameAndEmail(string name, string email)
         {
             try
             {
-                var customer = _customerBl.FindByIdAndEmail(customerId, email);
+                var customer = _customerBl.FindByNameAndEmail(name, email);
 
-                // אם לא מצא לפי ת"ז ואימייל – נבדוק אם קיים לפחות לפי ת"ז
                 if (customer == null)
                 {
-                    bool exists = _customerBl.ExistsById(customerId);
-                    Console.WriteLine($"customerId: {customerId}, email: {email}, exists: {exists}");
+                    bool exists = _customerBl.ExistsByName(name);
+                    Console.WriteLine($"name: {name}, email: {email}, exists: {exists}");
 
                     if (exists)
                     {
@@ -131,7 +137,6 @@ namespace Server.webApi.Controllers
                     return NotFound("לקוח לא נמצא");
                 }
 
-                // מצא את הלקוח
                 return Ok(customer);
             }
             catch (Exception ex)

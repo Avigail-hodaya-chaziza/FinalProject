@@ -24,7 +24,7 @@ namespace Dal.Api
         void DeleteAppointment(Appointment appointment);
         void DeleteAppointments(List<Appointment> appointments);
         List<Appointment> GetAppointmentsBeforeYear(int year);
-        public List<Appointment> GetAppointmentsByCustomerId(string customerId);
+        public List<Appointment> GetAppointmentsByCustomerId(int customerId);
         public List<Appointment> GetAppointmentsInRange(DateOnly startDate, DateOnly endDate);
         public List<Appointment> GetUpcomingAppointments();
 

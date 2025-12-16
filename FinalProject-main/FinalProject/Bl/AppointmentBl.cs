@@ -1,4 +1,4 @@
-﻿using Dal.Models;
+using Dal.Models;
 using Dal.Services;
 using Serilog;
 namespace Bl
@@ -21,7 +21,7 @@ namespace Bl
             _blockedSlotService = blockedSlotService;
         }
 
-        public bool AddAppointment(string customerId, DateOnly date, int treatment)
+        public bool AddAppointment(int customerId, DateOnly date, int treatment)
         {
             var existingCustomer = _customerService.GetCustomerById(customerId);
             if (existingCustomer == null)
@@ -142,7 +142,7 @@ namespace Bl
             return true;
         }
 
-        public bool UpdateAppointment(string customerId, DateOnly date, int treatment)
+        public bool UpdateAppointment(int customerId, DateOnly date, int treatment)
         {
             var appt = _appointmentService.GetAppointmentByDate(date);
             if (appt == null)
@@ -185,7 +185,7 @@ namespace Bl
             return true;
         }
 
-        public List<Appointment> GetAppointmentsByCustomerId(string customerId)
+        public List<Appointment> GetAppointmentsByCustomerId(int customerId)
         {
             return _appointmentService.GetAppointmentsByCustomerId(customerId);
         }
@@ -204,9 +204,5 @@ namespace Bl
         {
             return _appointmentService.GetAllAppointments();
         }
-
-
-
-
     }
 }

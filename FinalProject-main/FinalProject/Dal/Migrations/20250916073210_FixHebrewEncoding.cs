@@ -22,10 +22,8 @@ namespace Dal.Migrations
             // תיקון encoding לעברית בטבלת Customers
             migrationBuilder.Sql(@"
                 ALTER TABLE Customers 
-                ALTER COLUMN FirstName NVARCHAR(255) COLLATE Hebrew_CI_AS;
-                
-                ALTER TABLE Customers 
-                ALTER COLUMN LastName NVARCHAR(255) COLLATE Hebrew_CI_AS;
+                ALTER COLUMN FullName NVARCHAR(255) COLLATE Hebrew_CI_AS;
+           
             ");
         }
 
@@ -41,10 +39,8 @@ namespace Dal.Migrations
                 ALTER COLUMN Description NVARCHAR(MAX);
                 
                 ALTER TABLE Customers 
-                ALTER COLUMN FirstName NVARCHAR(255);
-                
-                ALTER TABLE Customers 
-                ALTER COLUMN LastName NVARCHAR(255);
+                ALTER COLUMN FullName NVARCHAR(255);
+            
             ");
         }
     }

@@ -38,7 +38,9 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization();
 builder.Services.AddDbContext<dbClass>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
-        sqlOptions => sqlOptions.CommandTimeout(120)));
+        sqlOptions => {
+            sqlOptions.CommandTimeout(120);
+        }));
 
 builder.Services.AddScoped<CustomerBl>();
 builder.Services.AddScoped<TreatmentBl>();
@@ -67,7 +69,11 @@ builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(System.Text.Unicode.UnicodeRanges.All);
+        options.JsonSerializerOptions.PropertyNamingPolicy = null;
     });
+
+// הגדרת קידוד UTF-8
+System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
 
 var app = builder.Build();
 
